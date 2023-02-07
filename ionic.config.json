@@ -1,0 +1,7 @@
+{
+  "name": "ucare",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
