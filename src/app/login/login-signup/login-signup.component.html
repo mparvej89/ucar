@@ -1,0 +1,131 @@
+<ion-content class="ion-padding">
+  <div class="close" (click)="close()">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+
+  <div class="logo">
+    <ion-img src="../../assets/logo/Logo.png"></ion-img>
+  </div>
+
+  <!-- <div class="document">
+    <ion-img src="../../assets/icon/icondocment.svg"></ion-img>
+  </div> -->
+
+  <div class="header">
+    <ion-text>
+      <h2>{{'common-words.login-post' | translate}}</h2>
+    </ion-text>
+  </div>
+
+  <div class="ion-padding">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="login">
+        <ion-label>{{'common-buttons.login'|translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="signup">
+        <ion-label>{{'common-buttons.signup'|translate}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+    <div [ngSwitch]="segment">
+      <ion-card *ngSwitchCase="'login'">
+        <ion-card-content>
+          <form [formGroup]="loginForm">
+            <div class="input-div">
+              <ion-label>{{'common-words.email' | translate}}</ion-label>
+              <ion-item lines="none">
+                <ion-input type="email" name="email" formControlName="email"
+                  placeholder="{{'placeholder-text.email' | translate}}"></ion-input>
+              </ion-item>
+              <div *ngIf="loginErrorControl.email.touched && loginErrorControl.email.errors?.required" class="v-error">
+                {{'error-message.email' | translate}}
+              </div>
+            </div>
+
+            <div class="input-div">
+              <ion-label>{{'common-words.password' | translate}}</ion-label>
+              <ion-item lines="none">
+                <ion-input type="password" name="password" formControlName="password"
+                  placeholder="{{'placeholder-text.password' | translate}}"></ion-input>
+              </ion-item>
+              <div *ngIf="loginErrorControl.password.touched && loginErrorControl.password.errors?.required" class="v-error">
+                {{'error-message.password' | translate}}
+              </div>
+              <div *ngIf="loginErrorControl.password.touched && loginErrorControl.password.errors?.minlength"
+              class="v-error">
+              {{'error-message.password-length' | translate}}
+            </div>
+
+            </div>
+          </form>
+
+          <div class="btn-div">
+            <ion-button color="primary" expand="block" translate
+              [disabled]="loginForm.invalid" (click)="login()">common-buttons.login
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-card *ngSwitchCase="'signup'">
+        <ion-card-content>
+          <form [formGroup]="signupForm">
+            <div class="input-div">
+              <ion-label>{{'common-words.fullname' | translate}}</ion-label>
+              <ion-item lines="none">
+                <ion-input type="text" name="fullname" formControlName="fullname"
+                  placeholder="{{'placeholder-text.fullname' | translate}}"></ion-input>
+              </ion-item>
+              <div *ngIf="signupErrorControl.fullname.touched && signupErrorControl.fullname.errors?.required" class="v-error">
+                {{'error-message.fullname' | translate}}
+              </div>
+            </div>
+
+            <div class="input-div">
+              <ion-label>{{'common-words.email' | translate}}</ion-label>
+              <ion-item lines="none">
+                <ion-input type="email" name="email" formControlName="email"
+                  placeholder="{{'placeholder-text.email' | translate}}"></ion-input>
+              </ion-item>
+              <div *ngIf="signupErrorControl.email.touched && signupErrorControl.email.errors?.required" class="v-error">
+                {{'error-message.email' | translate}}
+              </div>
+            </div>
+
+            <div class="input-div">
+              <ion-label>{{'common-words.password' | translate}}</ion-label>
+              <ion-item lines="none">
+                <ion-input type="password" name="password" formControlName="password"
+                  placeholder="{{'placeholder-text.password' | translate}}"></ion-input>
+              </ion-item>
+              <div *ngIf="signupErrorControl.password.touched && signupErrorControl.password.errors?.required" class="v-error">
+                {{'error-message.password' | translate}}
+              </div>
+
+              <div *ngIf="signupErrorControl.password.touched && signupErrorControl.password.errors?.minlength"
+              class="v-error">
+              {{'error-message.password-length' | translate}}
+            </div>
+
+            </div>
+          </form>
+
+          <div class="btn-div">
+            <ion-button color="primary" expand="block" translate
+              [disabled]="signupForm.invalid" (click)="signup()">common-buttons.signup
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      
+    </div>
+  
+
+
+  <div class="copy">
+    <span>@2023 Ucar.com</span>
+  </div>
+</ion-content>

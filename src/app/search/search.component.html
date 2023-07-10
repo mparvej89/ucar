@@ -1,0 +1,71 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>Search</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-circle-outline" (click)="close()"></ion-icon>
+    </ion-buttons>
+    <ion-avatar slot="start">
+      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Basic Search</ion-label>
+    </ion-item-divider>
+
+    <!-- <ion-item>
+      <ion-select placeholder="Select Condition">
+        <ion-select-option value="used">Used</ion-select-option>
+        <ion-select-option value="certifiedused">Certified Used</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    <ion-item lines="none" class="ion-item-input">
+      <ion-select placeholder="Select Brand" [(ngModel)]="brandId">
+          <ion-select-option *ngFor="let brand of brands" [value]="brand.id">{{brand.brandName}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none" class="ion-item-input">
+      <ion-input type="tel" placeholder="Enter Year" value="" minlength="4" maxlength="4" [(ngModel)]="mfdYear"></ion-input>
+    </ion-item>
+
+    
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none" class="ion-item-input">
+            <ion-label>
+              {{'common-words.min'| translate}}
+            </ion-label>
+            <ion-input type="number" [(ngModel)]="minPrice"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none" class="ion-item-input">
+            <ion-label>
+              {{'common-words.max'| translate}}
+            </ion-label>
+            <ion-input type="number" [(ngModel)]="maxPrice"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    
+
+    <ion-item lines="none" class="ion-item-input">
+      <ion-input type="tel" [(ngModel)]="kilomiter" placeholder="Enter Kilomiter"></ion-input>
+    </ion-item>
+
+    <!-- <ion-item>
+      <ion-select placeholder="Feature">
+        <ion-select-option value="2000">2000</ion-select-option>
+        <ion-select-option value="2001">2001</ion-select-option>
+        <ion-select-option value="2002">2002</ion-select-option>
+        <ion-select-option value="2003">2003</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+  </ion-item-group>
+<div class="div-btn">
+  <ion-button fill="outline" (click)="search()">Search</ion-button>
+</div>
+
+</ion-content>

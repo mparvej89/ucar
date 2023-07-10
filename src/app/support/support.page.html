@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Support</ion-title>
+    <ion-avatar slot="end">
+      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item (click)="call()">
+    <ion-icon name="call-outline" slot="start"></ion-icon>
+    <ion-label>+966 55 507 0917</ion-label>
+  </ion-item>
+  <ion-item (click)="email()">
+    <ion-icon name="mail-outline" slot="start"></ion-icon>
+    <ion-label>info@u-car.biz</ion-label>
+    
+  </ion-item>
+</ion-content>

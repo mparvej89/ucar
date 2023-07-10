@@ -1,0 +1,45 @@
+.slider-card{
+    margin: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+ion-card-subtitle{
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+}
+.card-content{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.lbl-sub {
+    font-size: 16px;
+    font-weight: 600;
+}
+.details{
+    margin: 16px 1px;
+}
+.items{
+    margin: 0px -20px;
+    .right{
+        text-align: end;
+    }
+}
+.more-info{
+    text-align: center;
+    padding: 15px;
+    color: #ed3833;
+    font-weight: 600;
+}
+.btn{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    ion-button{
+        height: 30px;
+    }
+}
+ion-label{
+    white-space: normal !important;
+}
+

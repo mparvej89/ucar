@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'common-words.product-details' | translate}}</ion-title>
+    <ion-avatar slot="end">
+      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="slider-card">
+    <swiper #swiper [config]="config" class="latest-swiper">
+      <ng-template swiperSlide *ngFor="let img of addDetails?.images">
+        <ion-img [src]="img"></ion-img>
+      </ng-template>
+    </swiper>
+    <ion-card-content class="card-content">
+      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price}}</ion-card-subtitle>
+      <p class="lbl-sub">{{addDetails?.name}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="details">
+    <ion-card-content>
+      <ion-text>
+        <h2>
+          {{'common-words.details' | translate}}
+        </h2>
+      </ion-text>
+      <ion-item class="items">
+        <ion-label>
+          {{addDetails?.about}}
+        </ion-label>
+        <!-- <p class="right">
+          {{addDetails?.about}}
+        </p> -->
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.kilometers' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.kilometer}}
+        </p>
+      </ion-item>
+      <!-- <ion-item class="items">
+        <ion-label>
+          Warranty
+        </ion-label>
+        <p class="right">
+          Does not apply
+        </p>
+      </ion-item> -->
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.year' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.year}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.country' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.countryId?.countryName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.city' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.cityId?.cityName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.brand' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.brandId?.brandName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.model' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.modelId?.modelName}}
+        </p>
+      </ion-item>
+
+      <!-- <div class="more-info">
+        <ion-text>Show more details</ion-text>
+      </div> -->
+      <!-- <div class="btn">
+        <ion-button fill="solid">Call</ion-button>
+      <ion-button fill="outline">Message</ion-button>
+      <ion-button fill="solid">Chat</ion-button>
+      </div> -->
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

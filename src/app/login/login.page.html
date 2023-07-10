@@ -1,0 +1,60 @@
+<ion-content class="ion-padding">
+  <div class="close" (click)="close()">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+
+  <div class="logo">
+    <ion-img src="../../assets/logo/Logo.png"></ion-img>
+  </div>
+
+  <!-- <div class="document">
+    <ion-img src="../../assets/logo/Logo.png"></ion-img>
+  </div> -->
+
+  <div class="header">
+    <ion-text>
+      <h2>{{'common-words.login-post' | translate}}</h2>
+    </ion-text>
+  </div>
+
+  <!-- <ion-item lines="none">
+    <ion-button fill="outline" expand="block" class="btn" (click)="home()">
+      <ion-img src="../../assets/icon/facebook.svg" class="btn-img"></ion-img>
+      Continue with Facebook
+    </ion-button>
+  </ion-item> -->
+  <!-- <ion-item lines="none">
+    <ion-button fill="outline" expand="block" class="btn">
+      <ion-img src="../../assets/icon/google.svg" class="btn-img-google"></ion-img>
+      Continue with Google
+    </ion-button>
+  </ion-item> -->
+ <!--  <ion-item lines="none">
+    <ion-button fill="outline" expand="block" class="btn">
+      <ion-img src="../../assets/icon/apple.svg" class="btn-img-apple"></ion-img>
+      Continue with Apple
+    </ion-button>
+  </ion-item> -->
+  <ion-item lines="none">
+    <ion-button fill="outline" expand="block" class="btn" (click)="loginWithEmail()" translate>
+      <ion-img src="../../assets/icon/Email.svg" class="btn-img-email"></ion-img>
+      common-buttons.login-email
+    </ion-button>
+  </ion-item>
+
+  <div class="ion-padding">
+    
+    
+  </div>
+
+  <div class="account-details">
+    <ion-label>
+      <span>{{'common-words.is-not-account' | translate}}</span>
+      <p class="terms">{{'common-words.by-signing' | translate}}</p>
+      <p class="condition" (click)="termscondition()">{{'common-words.terms-condition' | translate}}</p>
+    </ion-label>
+  </div>
+  <div class="copy">
+    <span>@2023 Ucar.com</span>
+  </div>
+</ion-content>

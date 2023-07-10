@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Adds</ion-title>
+    <ion-avatar slot="end">
+      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let ad of adds">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" [src]="ad?.images[0]" />
+        </ion-thumbnail>
+        <ion-label>
+          <p style="font-size: 16px; font-weight: 600;">{{ad?.name}}</p>
+          <p style="font-size: 12px; font-weight: 400; color: #c70c0c;">{{ad.countryId.currency}}: {{ad?.price | number:'1.2-2'}}</p>
+          <p>KM: {{ad?.kilometer}}</p>
+        </ion-label>
+        <ion-icon name="ellipsis-vertical-outline" slot="end" (click)="action(ad)"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
