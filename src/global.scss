@@ -35,14 +35,24 @@
 .swiper .swiper-slide {
     display: block;
 }
+
 /* .swiper-pagination.swiper-pagination-bullets{
     bottom: 100px;
 } */
-.v-error{
+.v-error {
     color: #9e0000;
     font-weight: 400;
-  }
-  ion-avatar{
-    width: 50px;
+}
+
+ion-avatar {
+    width: 45px;
     height: auto;
+    --border-radius: 4px;
+    margin: 8px;
+}
+
+.logo {
+    ion-img::part(image) {
+        border-radius: 15px;
+    }
 }

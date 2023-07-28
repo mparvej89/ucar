@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   maxPrice: number;
   brandId: any;
   mfdYear: any;
-  kilomiter: any;
+  kilomiter: string;
   constructor(public modalCtrl: ModalController,
     private db: AngularFirestore,
     public api: ApiService) { }
@@ -33,14 +33,16 @@ export class SearchComponent implements OnInit {
       res.forEach((element: any) => {
         let tempBrands = element.data();
         this.brands.push(tempBrands);
+        this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
       });
     })
   }
 
   search() {
     this.api.searchAdds(this.brandId, this.kilomiter, this.minPrice, this.maxPrice, this.mfdYear).then(res => {
-      console.log(res);
-
+      if (res) {
+        this.modalCtrl.dismiss(res, 'CONFIRM')
+      }
     })
   }
 

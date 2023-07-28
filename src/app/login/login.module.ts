@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { LoginSignupComponent } from './login-signup/login-signup.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     TranslateModule
   ],
-  declarations: [LoginPage,LoginSignupComponent]
+  declarations: [LoginPage,LoginSignupComponent, ResetPasswordComponent]
 })
 export class LoginPageModule {}

@@ -46,7 +46,8 @@
         "brand": "Brand",
         "model": "Model",
         "about-content": "This application belongs to the Mazen Hassan Muhammad Khalil Corporation for Cars",
-        "reg-number": "with commercial registration number: "
+        "reg-number": "with commercial registration number: ",
+        "km":"KM"
     },
     "common-buttons": {
         "login": "Login",

@@ -67,6 +67,7 @@ export class CreateAddPage implements OnInit {
     this.db.collection('countries').valueChanges().subscribe(res => {
       if (res) {
         this.countries = res;
+        this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
       }
     });
 
@@ -100,6 +101,7 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempCity = element.data();
         this.cities.push(tempCity);
+        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName))
       });
     })
   }
@@ -122,6 +124,7 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempBrands = element.data();
         this.brands.push(tempBrands);
+        this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
       });
     })
   }
@@ -136,6 +139,7 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempModel = element.data();
         this.models.push(tempModel);
+        this.models.sort((a, b) => a.modelName.localeCompare(b.modelName));
       });
     })
   }

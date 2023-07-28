@@ -22,7 +22,7 @@ export class Tab1Page implements OnInit {
   priceMinMax: boolean = false;
   minPrice: any = 0;
   maxPrice: any = 10000;
-  activebtn: string = '';
+  activebtn: string = 'ALL';
   recordsPerPage = 4;
   startAfterCursor: any;
   testList: any[] = [];
@@ -181,7 +181,7 @@ export class Tab1Page implements OnInit {
     this.testSubscription = this.api.getPaginatedData(this.recordsPerPage, this.startAfterCursor, this.activebtn)
       .subscribe(result => {
         let resultData = (result.splice(0, this.recordsPerPage));
-        if (this.activebtn) {
+        if (this.activebtn!='ALL') {
           this.adds = resultData.filter(res => res?.type?.vehicleType.toLowerCase() == this.activebtn.toLowerCase());
         }
         else {

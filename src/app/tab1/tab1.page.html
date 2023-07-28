@@ -7,7 +7,7 @@
       ({{selectedCity?.cityName}})</ion-title>
     <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
     <ion-avatar slot="end">
-      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+      <img  src="../assets/logo/Logo.png" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
@@ -56,7 +56,7 @@
         <p class="category-title">{{'common-words.bikes'| translate}}</p>
       </ion-col>
       <ion-col size="4" style="text-align: -webkit-center; margin-top: 15px;">
-        <ion-card class="category" (click)="addtype()" [class.selected]="activebtn == ''">
+        <ion-card class="category" (click)="addtype('ALL')" [class.selected]="activebtn == 'ALL'">
           <ion-img src="../../assets/icon/Car.svg" style="padding: 8px;" class="img"></ion-img>
         </ion-card>
         <p class="category-title">{{'common-words.view-all'| translate}}</p>
@@ -172,11 +172,11 @@
       <ion-card-content class="card-content">
         <ion-card-subtitle>{{add.countryId.currency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
         <p class="lbl-sub-name">{{add?.name}}</p>
-        <p class="lbl-sub">Brand: {{add?.brandId?.brandName}}</p>
-        <p class="lbl-sub">Model: {{add?.modelId?.modelName}}</p>
-        <p class="lbl-sub">Year: {{add.year}}</p>
-        <p class="lbl-sub">KM: {{add.kilometer}}</p>
-        <p class="lbl-sub">City: {{add?.cityId?.cityName}}</p>
+        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{add?.brandId?.brandName}}</p>
+        <p class="lbl-sub">{{'common-words.model' | translate}}: {{add?.modelId?.modelName}}</p>
+        <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
+        <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer}}</p>
+        <p class="lbl-sub">{{'common-words.city' | translate}}: {{add?.cityId?.cityName}}</p>
       </ion-card-content>
     </ion-card>
 

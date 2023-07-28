@@ -49,12 +49,12 @@
 
   <div class="account-details">
     <ion-label>
-      <span>{{'common-words.is-not-account' | translate}}</span>
+      <span (click)="loginWithEmail()">{{'common-words.is-not-account' | translate}}</span>
       <p class="terms">{{'common-words.by-signing' | translate}}</p>
       <p class="condition" (click)="termscondition()">{{'common-words.terms-condition' | translate}}</p>
     </ion-label>
   </div>
   <div class="copy">
-    <span>@2023 Ucar.com</span>
+    <span (click)="open()">@2023 ucar.biz</span>
   </div>
 </ion-content>

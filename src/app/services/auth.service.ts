@@ -18,15 +18,15 @@ export class AuthService {
   setImagesForUploadData = new ReplaySubject<any>(1);
   constructor(private fireAuth: AngularFireAuth,
     private db: AngularFirestore,
-    public api:ApiService) { }
+    public api: ApiService) { }
 
 
-    setImagesDataForUpload(items) {
-      this.setImagesForUploadData.next(items);
-    }
-    getImagesDataForUpload() {
-      return this.setImagesForUploadData.asObservable();
-    }
+  setImagesDataForUpload(items) {
+    this.setImagesForUploadData.next(items);
+  }
+  getImagesDataForUpload() {
+    return this.setImagesForUploadData.asObservable();
+  }
 
   public signInWithEmailPassword(email: string, password: string, fullname: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -37,7 +37,7 @@ export class AuthService {
               uid: res.user.uid,
               email: email,
               fullname: fullname,
-              type:'USER'
+              type: 'USER'
             });
             this.authInfo$.next(new AuthInfo(res.user.uid));
             resolve(res.user);
@@ -90,5 +90,17 @@ export class AuthService {
     return this.fireAuth.signOut();
   }
 
-  
+  public resetPassword(email: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.fireAuth.sendPasswordResetEmail(email)
+        .then(res => {
+          resolve('success');
+        })
+        .catch(err => {
+          reject(`reset failed ${err}`);
+        });
+    });
+  }
+
+
 }

@@ -18,6 +18,7 @@ export class CountryCityComponent implements OnInit {
     this.db.collection('countries').valueChanges().subscribe(res => {
       if (res) {
         this.countries = res;
+        this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
       }
     })
   }
@@ -46,6 +47,8 @@ export class CountryCityComponent implements OnInit {
       res.forEach((element: any) => {
         let tempCity = element.data();
         this.cities.push(tempCity);
+        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName));
+        
       });
     })
   }

@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UtilService } from 'src/app/services/util.service';
 import firebase from 'firebase/compat/app';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'app-login-signup',
@@ -84,5 +85,19 @@ export class LoginSignupComponent implements OnInit {
       this.util.hideLoading();
       this.util.presentToast('Something went wrong!');
     })
+  }
+
+  async resetPass(){
+    const modal = await this.modalCtrl.create({
+      component: ResetPasswordComponent,
+    });
+    modal.present();
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'confirm') {
+      //this.router.navigate(['./tabs']);
+    }
+  }
+  open() {
+    window.open('http://ucar.biz/', '_blank');
   }
 }

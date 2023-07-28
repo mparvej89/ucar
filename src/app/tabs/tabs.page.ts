@@ -37,8 +37,9 @@ export class TabsPage {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
+    if (role === 'CONFIRM') {
+      console.log(data);
+      
       //this.message = `Hello, ${data}!`;
     }
   }

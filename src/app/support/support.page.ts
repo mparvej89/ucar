@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-support',
@@ -8,7 +9,8 @@ import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 })
 export class SupportPage implements OnInit {
 
-  constructor(private callNumber: CallNumber) { }
+  constructor(private callNumber: CallNumber,
+    public translate: TranslateService) { }
 
   ngOnInit() {
   }

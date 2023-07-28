@@ -59,7 +59,11 @@
 
             </div>
           </form>
-
+          <div class="forgot-pass">
+            <ion-text (click)="resetPass()">
+              {{'common-words.forgot-password'|translate}}
+            </ion-text>
+          </div>
           <div class="btn-div">
             <ion-button color="primary" expand="block" translate
               [disabled]="loginForm.invalid" (click)="login()">common-buttons.login
@@ -111,6 +115,8 @@
 
             </div>
           </form>
+
+          
 
           <div class="btn-div">
             <ion-button color="primary" expand="block" translate

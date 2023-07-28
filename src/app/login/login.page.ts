@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoginPage implements OnInit {
 
   constructor(public router: Router,
-    public modalCtrl:ModalController,
+    public modalCtrl: ModalController,
     public translate: TranslateService) { }
 
   ngOnInit() {
@@ -21,10 +21,10 @@ export class LoginPage implements OnInit {
   home() {
     this.router.navigate(['./tabs']);
   }
-  close(){
+  close() {
     this.router.navigate(['./tabs']);
   }
-  async loginWithEmail(){
+  async loginWithEmail() {
     const modal = await this.modalCtrl.create({
       component: LoginSignupComponent,
     });
@@ -35,8 +35,11 @@ export class LoginPage implements OnInit {
     }
   }
 
-  termscondition(){
+  termscondition() {
     this.router.navigate(['./terms-condition']);
+  }
+  open() {
+    window.open('http://ucar.biz/', '_blank');
   }
 
 }

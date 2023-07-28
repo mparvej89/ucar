@@ -66,7 +66,7 @@ export class ApiService {
         this.db.collection('adds', ref => ref.where("type", "==", type).where("status", "==", "APPROVED")).valueChanges().subscribe(adds => resolve(adds));
       }
       else {
-        this.db.collection('adds',ref =>ref.where("status", "==", "APPROVED")).valueChanges().subscribe(adds => resolve(adds));
+        this.db.collection('adds', ref => ref.where("status", "==", "APPROVED")).valueChanges().subscribe(adds => resolve(adds));
       }
     })
   }
@@ -120,17 +120,15 @@ export class ApiService {
     });
   }
 
-  searchAdds(brandId, kilometer, minPrice:number, maxPrice:number, year) {
+  searchAdds(brandId, kilometer, minPrice: number, maxPrice: number, year) {
     return new Promise<any>((resolve) => {
-      this.db.collection('adds', ref => ref.where("brandId", "==", brandId)
-        .where("kilometer", "==", kilometer).where("price", ">", minPrice)
-        .where("price", "<", maxPrice)
-        .where("year", "==", year)).valueChanges().subscribe(adds => resolve(adds));
-        
+      this.db.collection('adds', ref => ref.where("brandId.id", "==", brandId)).valueChanges().subscribe(adds => resolve(adds));
     })
   }
 
   deleteUser(user) {
     this.db.collection('users').doc(user.uid).delete();
   }
+
+
 }
