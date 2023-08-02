@@ -8,13 +8,23 @@ import { UtilService } from '../services/util.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-
+import { ScreensizeService } from '../services/screensize.service';
+import { SwiperComponent } from 'swiper/angular';
+import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, SwiperOptions, Zoom } from 'swiper';
+import { CreateAddPage } from '../create-add/create-add.page';
+SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
+  @ViewChild('swiper') swiper: SwiperComponent | undefined;
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    pagination: true,
+    autoplay: true
+  }
   selectedCountry: any;
   selectedCity: any;
   userId: any;
@@ -32,12 +42,34 @@ export class Tab1Page implements OnInit {
   isOpen = false;
   @ViewChild(IonInfiniteScroll) infinite: IonInfiniteScroll;
   userDetails: any;
+  isDesktop: boolean;
+  slides: any[] = [{
+    url: '../../assets/images/1.jpg'
+  },
+  {
+    url: '../../assets/images/2.jpg'
+  }, {
+    url: '../../assets/images/3.jpg'
+  }];
+  brands: any[] = [];
   constructor(public router: Router,
     public modalCtrl: ModalController,
     public api: ApiService,
     public util: UtilService,
     private db: AngularFirestore,
-    public translate: TranslateService) { }
+    public translate: TranslateService,
+    private screensizeService: ScreensizeService) {
+    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+      this.isDesktop = isDesktop;
+      if (this.isDesktop) {
+        this.router.navigate(['./tab1']);
+      }
+      else {
+        this.router.navigate(['./tabs/tab1'])
+      }
+    });
+
+  }
 
   ngOnInit() {
     this.api.getUserDetails().subscribe(res => {
@@ -56,10 +88,9 @@ export class Tab1Page implements OnInit {
     }
   }
   ionViewWillEnter() {
-    /* this.userId = localStorage.getItem('loggedIn'); */
-    // this.getAdds();
     this.adds = [];
     this.getMoreData(null);
+    //this.getBrands();
   }
 
   details(data: any) {
@@ -69,6 +100,7 @@ export class Tab1Page implements OnInit {
   async countryCityModal() {
     const modal = await this.modalCtrl.create({
       component: CountryCityComponent,
+      cssClass: 'custom-modal'
     });
     modal.present();
 
@@ -82,9 +114,26 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  createAdd() {
+  async createAdd() {
     if (null != this.userDetails && this.userDetails.uid) {
-      this.router.navigate(['./tabs/create-add/Add']);
+      if (this.isDesktop) {
+        const modal = await this.modalCtrl.create({
+          component: CreateAddPage,
+          cssClass: 'custom-modal'
+        });
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+        if (role === 'CONFIRM') {
+          console.log(data);
+
+          //this.message = `Hello, ${data}!`;
+        }
+      }
+      else {
+        this.router.navigate(['./tabs/create-add/Add']);
+      }
+
     } else {
       this.router.navigate(['./login']);
     }
@@ -181,7 +230,7 @@ export class Tab1Page implements OnInit {
     this.testSubscription = this.api.getPaginatedData(this.recordsPerPage, this.startAfterCursor, this.activebtn)
       .subscribe(result => {
         let resultData = (result.splice(0, this.recordsPerPage));
-        if (this.activebtn!='ALL') {
+        if (this.activebtn != 'ALL') {
           this.adds = resultData.filter(res => res?.type?.vehicleType.toLowerCase() == this.activebtn.toLowerCase());
         }
         else {
@@ -214,4 +263,17 @@ export class Tab1Page implements OnInit {
     this.popover.event = e;
     this.isOpen = true;
   }
+
+  /* getBrands() {
+    this.brands = [];
+    this.db.collection('brands').get().subscribe((res: any) => {
+      res.forEach((element: any) => {
+        let tempBrands = element.data();
+        this.brands.push(tempBrands);
+        this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
+        console.log('this.brands', this.brands);
+
+      });
+    })
+  } */
 }

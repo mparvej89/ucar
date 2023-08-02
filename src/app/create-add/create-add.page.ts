@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilService } from '../services/util.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, tap } from 'rxjs';
 import { SwiperOptions } from 'swiper';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ScreensizeService } from '../services/screensize.service';
+import { ModalController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-add',
@@ -15,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CreateAddPage implements OnInit {
   title: string = '';
-  createAddForm: FormGroup;
+  createAddForm: any;
   countries: any[] = [];
   cities: any[] = [];
   selectedCountry: any;
@@ -33,13 +35,18 @@ export class CreateAddPage implements OnInit {
     spaceBetween: 6
   }
   vehicleTypes: any[] = [];
+  isDesktop: boolean;
   constructor(private db: AngularFirestore,
     public util: UtilService,
     private storage: AngularFireStorage,
     private api: ApiService,
     private router: Router,
-    private aroute: ActivatedRoute) {
-    this.createAddForm = new FormGroup({
+    private aroute: ActivatedRoute,
+    private screensizeService: ScreensizeService,
+    private modalCtrl: ModalController,
+    private navCtrl: NavController,
+    private formBuilder: FormBuilder) {
+    this.createAddForm = this.formBuilder.group({
       countryId: new FormControl('', [Validators.required]),
       cityId: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
@@ -51,7 +58,10 @@ export class CreateAddPage implements OnInit {
       phone: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       about: new FormControl(''),
       type: new FormControl('', [Validators.required]),
-      /* name: new FormControl('', [Validators.required]) */
+    });
+
+    this.screensizeService.isDesktopView().subscribe((isDesktop) => {
+      this.isDesktop = isDesktop;
     });
 
   }
@@ -83,6 +93,7 @@ export class CreateAddPage implements OnInit {
 
   }
   ionViewWillEnter() {
+    console.log('cons');
     if (this.title == 'Edit') {
       this.updateAdd();
     }
@@ -90,9 +101,6 @@ export class CreateAddPage implements OnInit {
 
   selectCountry(event: any) {
     this.getCity(event.detail.value.id);
-
-    console.log(event.detail.value);
-
     this.selectedCountry = event.detail.value.id;
   }
   getCity(countryId: any) {
@@ -163,9 +171,12 @@ export class CreateAddPage implements OnInit {
             data.status = "CREATED"
             this.api.createAdd(data).then(res => {
               if (res == 'success') {
-                this.util.hideLoading();
+                this.images = [];
                 this.api.setAddDetails(null);
-                this.router.navigate(['./tabs/tab1']);
+                this.createAddForm.reset();
+                this.util.hideLoading();
+                this.util.presentToast('Add created successfully!');
+                this.navCtrl.back();
               }
             }, err => {
               this.router.navigate(['./login']);
@@ -180,9 +191,12 @@ export class CreateAddPage implements OnInit {
             data.creationDate = new Date().toISOString();
             this.api.updateAdd(data).then(res => {
               if (res == 'success') {
-                this.util.hideLoading();
+                this.images = [];
                 this.api.setAddDetails(null);
-                this.router.navigate(['./tabs/tab1']);
+                this.createAddForm.reset();
+                this.util.hideLoading();
+                this.util.presentToast('Add update successfully!');
+                this.navCtrl.back();
               }
             }, err => {
               this.router.navigate(['./login']);
@@ -277,6 +291,12 @@ export class CreateAddPage implements OnInit {
     return s1 && s2 ? s1.id == s2.id : s1 == s2;
   }
 
+  close() {
+    this.modalCtrl.dismiss();
+  }
 
+  back() {
+    this.navCtrl.back();
+  }
 
 }

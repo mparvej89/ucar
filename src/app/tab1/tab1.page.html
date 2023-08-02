@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-header [translucent]="true" class="ion-no-border" *ngIf="!isDesktop">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
@@ -7,18 +7,41 @@
       ({{selectedCity?.cityName}})</ion-title>
     <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
     <ion-avatar slot="end">
-      <img  src="../assets/logo/Logo.png" />
+      <img src="../assets/logo/Logo.png" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-header [translucent]="true" class="ion-no-border" *ngIf="isDesktop">
+  <ion-toolbar color="primary">
+    <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity"> 
+      <div class="drop-icon">
+        <span>
+          {{selectedCountry?.countryName}} ({{selectedCity?.cityName}})</span>
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </div>
+    </ion-title>
+    <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
+    <ion-avatar slot="start">
+      <img src="../assets/logo/Logo.png" />
+    </ion-avatar>
+
+    
+    <ion-title slot="end">
+      <span style="margin-right: 35px;">info@u-car.biz</span>
+      <span>+966 55 507 0917</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" *ngIf="!isDesktop">
   <div class="language">
     <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
       <ng-template>
         <ion-content class="ion-padding" (click)="changeLanguage('en')">
           <ion-item>
-            <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img>  
+            <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img>
             <ion-label>
               English
             </ion-label>
@@ -26,7 +49,7 @@
         </ion-content>
         <ion-content class="ion-padding" (click)="changeLanguage('ar')">
           <ion-item>
-            <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img>  
+            <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img>
             <ion-label>
               Arabic
             </ion-label>
@@ -34,10 +57,12 @@
         </ion-content>
       </ng-template>
     </ion-popover>
-    <div class="eng"  (click)="presentPopover($event)" *ngIf="translate.currentLang=='en'">
-     <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img> EN</div>
-      <div class="ara"  (click)="presentPopover($event)" *ngIf="translate.currentLang=='ar'">
-        <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img> AR</div>
+    <div class="eng" (click)="presentPopover($event)" *ngIf="translate.currentLang=='en'">
+      <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img> EN
+    </div>
+    <div class="ara" (click)="presentPopover($event)" *ngIf="translate.currentLang=='ar'">
+      <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img> AR
+    </div>
   </div>
 
 
@@ -68,10 +93,10 @@
         <ion-icon name="add-outline" (click)="createAdd()"></ion-icon>
       </div>
       <div id="open-sort">
-        <ion-icon name="swap-vertical-outline" ></ion-icon> {{'common-words.sort'| translate}}
+        <ion-icon name="swap-vertical-outline"></ion-icon> {{'common-words.sort'| translate}}
       </div>
       <div id="open-filters">
-        <ion-icon name="options-outline" ></ion-icon> {{'common-words.filters'| translate}}
+        <ion-icon name="options-outline"></ion-icon> {{'common-words.filters'| translate}}
       </div>
     </div>
 
@@ -156,7 +181,240 @@
               </ion-col>
             </ion-row>
             <div class="btn">
-              <ion-button fill="outline" expand="block" size="small" (click)="seeList()" translate>common-buttons.see-listing</ion-button>
+              <ion-button fill="outline" expand="block" size="small" (click)="seeList()"
+                translate>common-buttons.see-listing</ion-button>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <div class="not-found" *ngIf='adds.length==0'>
+      Not found any ads
+    </div>
+
+    <ion-card class="product-card" *ngFor="let add of adds" (click)="details(add)">
+      <ion-img class="product-img" [src]="add.images[0]"></ion-img>
+      <ion-card-content class="card-content">
+        <ion-card-subtitle>{{add.countryId.currency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+        <p class="lbl-sub-name">{{add?.name}}</p>
+        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{add?.brandId?.brandName}}</p>
+        <p class="lbl-sub">{{'common-words.model' | translate}}: {{add?.modelId?.modelName}}</p>
+        <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
+        <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer}}</p>
+        <p class="lbl-sub">{{'common-words.city' | translate}}: {{add?.cityId?.cityName}}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="getMoreData($event)">
+      <ion-infinite-scroll-content loading-spinner="circles" loading-text="Loading...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="isDesktop">
+  <div class="language-desktop">
+    <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+      <ng-template>
+        <ion-content class="ion-padding" (click)="changeLanguage('en')">
+          <ion-item>
+            <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img>
+            <ion-label>
+              English
+            </ion-label>
+          </ion-item>
+        </ion-content>
+        <ion-content class="ion-padding" (click)="changeLanguage('ar')">
+          <ion-item>
+            <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img>
+            <ion-label>
+              Arabic
+            </ion-label>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+    <div class="eng" (click)="presentPopover($event)" *ngIf="translate.currentLang=='en'">
+      <ion-img src="../../assets/icon/gbr.svg" class="flug"></ion-img> EN
+    </div>
+    <div class="ara" (click)="presentPopover($event)" *ngIf="translate.currentLang=='ar'">
+      <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img> AR
+    </div>
+  </div>
+
+  <div class="search-window">
+    <ion-card>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-input label="Default Input" placeholder="EX. Toyota"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button expand="block">Search</ion-button>
+        </div>
+
+        <div class="ion-padding" style="text-align: center;">
+          <ion-text class="ion-text-center">
+            <h2>Start with your car brand</h2>
+          </ion-text>
+        </div>
+
+        <div class="ion-padding" style="text-align: center;">
+          <ion-row>
+            <ion-col size="3">
+              <div class="brand-logo">
+                <ion-img src="../../assets/images/maruti-suzuki.webp"></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="brand-logo">
+                <ion-img src="../../assets/images/ford.webp"></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="brand-logo">
+                <ion-img src="../../assets/images/honda.webp"></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="brand-logo">
+                <ion-img src="../../assets/images/toyota.webp"></ion-img>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
+  <swiper #swiper [config]="config" class="latest-swiper">
+    <ng-template swiperSlide *ngFor="let img of slides">
+      <ion-img [src]="img.url"></ion-img>
+    </ng-template>
+  </swiper>
+
+  <div class="ion-padding" style="margin-left: 20px; margin-right: 20px;">
+    <ion-row>
+      <ion-col size="4" style="text-align: -webkit-center; margin-top: 15px;">
+        <ion-card class="category-desktop" (click)="addtype('CAR')" [class.selected]="activebtn == 'CAR'">
+          <ion-img src="../../assets/icon/Car.svg" class="img"></ion-img>
+          <p class="category-title">{{'common-words.cars'| translate}}</p>
+        </ion-card>
+
+      </ion-col>
+      <ion-col size="4" style="text-align: -webkit-center; margin-top: 15px;">
+        <ion-card class="category-desktop" (click)="addtype('BIKE')" [class.selected]="activebtn == 'BIKE'">
+          <ion-img src="../../assets/icon/Bike.svg" class="img"></ion-img>
+          <p class="category-title">{{'common-words.bikes'| translate}}</p>
+        </ion-card>
+
+      </ion-col>
+      <ion-col size="4" style="text-align: -webkit-center; margin-top: 15px;">
+        <ion-card class="category-desktop" (click)="addtype('ALL')" [class.selected]="activebtn == 'ALL'">
+          <ion-img src="../../assets/icon/Car.svg" class="img"></ion-img>
+          <p class="category-title">{{'common-words.view-all'| translate}}</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <div class="filter" style="margin-top: 10px;">
+      <div>
+        <ion-icon name="add-outline" (click)="createAdd()"></ion-icon>
+      </div>
+      <div id="open-sort">
+        <ion-icon name="swap-vertical-outline"></ion-icon> {{'common-words.sort'| translate}}
+      </div>
+      <div id="open-filters">
+        <ion-icon name="options-outline"></ion-icon> {{'common-words.filters'| translate}}
+      </div>
+    </div>
+
+
+    <ion-modal #modal trigger="open-sort" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item (click)="newToOld('NEWTOOLD')">
+              <ion-label>
+                <h2> {{'common-words.new-to-old'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('OLDTONEW')">
+              <ion-label>
+                <h2> {{'common-words.old-to-new'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('PRICEHIGHTOLOW')">
+              <ion-label>
+                <h2>{{'common-words.price-high-to-low'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('PRICLOWTOHIGH')">
+              <ion-label>
+                <h2> {{'common-words.price-low-to-high'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('MILAGEHGH')">
+              <ion-label>
+                <h2> {{'common-words.milage-highest'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('MILAGELOW')">
+              <ion-label>
+                <h2> {{'common-words.milage-lowest'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="newToOld('NEWEST')">
+              <ion-label>
+                <h2> {{'common-words.year-newest'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+            <!-- <ion-item (click)="newToOld('OLDEST')">
+                <ion-label>
+                  <h2> {{'common-words.year-oldest'| translate}}</h2>
+                </ion-label>
+              </ion-item> -->
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+
+    <ion-modal #modal trigger="open-filters" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item detail (click)="minmax()">
+              <ion-label>
+                <h2> {{'common-words.price'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div *ngIf="priceMinMax">
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none" class="ion-item-input">
+                  <ion-label>
+                    {{'common-words.min'| translate}}
+                  </ion-label>
+                  <ion-input [(ngModel)]="minPrice"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item lines="none" class="ion-item-input">
+                  <ion-label>
+                    {{'common-words.max'| translate}}
+                  </ion-label>
+                  <ion-input [(ngModel)]="maxPrice"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <div class="btn">
+              <ion-button fill="outline" expand="block" size="small" (click)="seeList()"
+                translate>common-buttons.see-listing</ion-button>
             </div>
           </div>
         </ion-content>

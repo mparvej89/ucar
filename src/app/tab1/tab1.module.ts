@@ -7,14 +7,15 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { SearchComponent } from '../search/search.component';
 import { CountryCityComponent } from '../country-city/country-city.component';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { SwiperModule } from 'swiper/angular';
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     Tab1PageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    SwiperModule
   ],
   declarations: [Tab1Page, SearchComponent,CountryCityComponent]
 })

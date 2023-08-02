@@ -1,7 +1,9 @@
-<ion-header>
+<ion-header *ngIf="!isDesktop">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs"></ion-back-button>
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
     <ion-avatar slot="end">
@@ -10,7 +12,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-header *ngIf="isDesktop">
+  <ion-toolbar color="primary">
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-circle-outline" (click)="close()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding" *ngIf="!isDesktop">
   <div class="heading">
     <h3>{{'common-words.car-details' | translate}}</h3>
   </div>
@@ -99,20 +111,6 @@
         {{'error-message.model' | translate}}
       </div>
     </div>
-
-    <!--  <div class="input-div">
-      <ion-label>{{'common-words.item-name' | translate}}</ion-label>
-      <ion-item lines="none">
-        <ion-input type="text" name="name" formControlName="name" placeholder="{{'placeholder-text.item-name' | translate}}"></ion-input>
-      </ion-item>
-      <div *ngIf="createAddForm.controls.name.touched && createAddForm.controls.name.errors?.required" class="v-error">
-        
-        {{'error-message.item-name' | translate}}
-      </div>
-      
-    </div> -->
-
-
     <div class="input-div">
       <ion-label>{{'common-words.year' | translate}}</ion-label>
       <ion-item lines="none">
@@ -137,9 +135,6 @@
         {{'error-message.year-valid' | translate}}
       </div>
     </div>
-
-
-
 
     <div class="input-div">
       <ion-label>{{'common-words.kilometers' | translate}}</ion-label>
@@ -231,4 +226,216 @@
       translate}}
     </ion-button>
   </div>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="isDesktop">
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{'common-words.car-details' | translate}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <form [formGroup]="createAddForm">
+      <div class="input-div">
+        <ion-label>{{'common-words.select-country' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-select placeholder="{{'common-words.select-country' | translate}}" name="countryId"
+            formControlName="countryId" (ionChange)="selectCountry($event)" [compareWith]="compareCountry">
+            <ion-select-option *ngFor="let country of countries"
+              [value]="country">{{country.countryName}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.countryId.touched && createAddForm.controls.countryId.errors?.required"
+          class="v-error">
+          {{'error-message.country' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.select-city' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-select placeholder="{{'common-words.select-city' | translate}}" name="cityId" formControlName="cityId"
+            (ionChange)="selectCity($event)" [compareWith]="compareCity">
+            <ion-select-option *ngFor="let city of cities" [value]="city">{{city.cityName}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.cityId.touched && createAddForm.controls.cityId.errors?.required"
+          class="v-error">
+          {{'error-message.city' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.address' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-input type="text" name="address" formControlName="address"
+            placeholder="{{'placeholder-text.full-address' | translate}}"></ion-input>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.address.touched && createAddForm.controls.address.errors?.required"
+          class="v-error">
+  
+          {{'error-message.address' | translate}}
+        </div>
+      </div>
+  
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.vehicle-type' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-select placeholder="Select Type" name="type" formControlName="type" (ionChange)="selectType($event)">
+            <ion-select-option [value]="vtype" *ngFor="let vtype of vehicleTypes">{{vtype.vehicleType}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.type.touched && createAddForm.controls.type.errors?.required" class="v-error">
+          {{'error-message.vehicle-type' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.select-brand' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-select placeholder="{{'common-words.select-brand' | translate}}" name="brandId" formControlName="brandId"
+            (ionChange)="selectBrand($event)" [compareWith]="compareBrand">
+            <ion-select-option *ngFor="let brand of brands" [value]="brand">{{brand.brandName}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.brandId.touched && createAddForm.controls.brandId.errors?.required"
+          class="v-error">
+          {{'error-message.brand' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.select-model' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-select placeholder="{{'common-words.select-model' | translate}}" name="modelId"
+            [compareWith]="compareModel" formControlName="modelId">
+            <ion-select-option *ngFor="let model of models" [value]="model">{{model.modelName}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.modelId.touched && createAddForm.controls.modelId.errors?.required"
+          class="v-error">
+  
+          {{'error-message.model' | translate}}
+        </div>
+      </div>
+      <div class="input-div">
+        <ion-label>{{'common-words.year' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-input value="{{ createAddForm.controls.year.value | date: 'yyyy' }}" id="triggercheckInStartDate"
+            class="ion-text-end" formControlName="year">
+          </ion-input>
+  
+          <ion-modal trigger="triggercheckInStartDate" [initialBreakpoint]="0.45" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+            <ng-template>
+              <ion-datetime presentation="year" formControlName="year" [showDefaultButtons]="true"
+                [showDefaultTitle]="true" doneText="Ok" cancelText="Cancel">
+                <span slot="title">Year</span>
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+          <!--  <ion-input type="text" name="year" formControlName="year" placeholder="{{'common-words.year' | translate}}"></ion-input> -->
+        </ion-item>
+        <div *ngIf="createAddForm.controls.year.touched && createAddForm.controls.year.errors?.required" class="v-error">
+          {{'error-message.year' | translate}}
+        </div>
+        <div *ngIf="createAddForm.controls.year.touched && createAddForm.controls.year.errors?.pattern" class="v-error">
+          {{'error-message.year-valid' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.kilometers' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-input type="text" name="kilometer" formControlName="kilometer"
+            placeholder="{{'common-words.kilometers' | translate}}"></ion-input>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.kilometer.touched && createAddForm.controls.kilometer.errors?.required"
+          class="v-error">
+  
+          {{'error-message.kilometers' | translate}}
+        </div>
+        <div *ngIf="createAddForm.controls.kilometer.touched && createAddForm.controls.kilometer.errors?.pattern"
+          class="v-error">
+  
+          {{'error-message.kilometers-valid' | translate}}
+        </div>
+        <div *ngIf="createAddForm.controls.kilometer.touched && createAddForm.controls.kilometer.errors?.min"
+          class="v-error">
+  
+          {{'error-message.kilometers-min' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.price' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-input type="number" name="price" formControlName="price"
+            placeholder="{{'common-words.price' | translate}}"></ion-input>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.price.touched && createAddForm.controls.price.errors?.required"
+          class="v-error">
+  
+          {{'error-message.price' | translate}}
+        </div>
+        <div *ngIf="createAddForm.controls.price.touched && createAddForm.controls.price.errors?.pattern" class="v-error">
+  
+          {{'error-message.price-valid' | translate}}
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.phone' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-input type="text" name="phone" formControlName="phone"
+            placeholder="{{'common-words.phone' | translate}}"></ion-input>
+        </ion-item>
+        <div *ngIf="createAddForm.controls.phone.touched && createAddForm.controls.phone.errors?.required"
+          class="v-error">
+  
+          {{'error-message.phone' | translate}}
+        </div>
+        <div *ngIf="createAddForm.controls.phone.touched && createAddForm.controls.phone.errors?.pattern" class="v-error">
+  
+          {{'error-message.phone-valid' | translate}}
+        </div>
+      </div>
+  
+  
+  
+      <div class="input-div">
+        <ion-label>{{'common-words.about-something' | translate}}</ion-label>
+        <ion-item lines="none">
+          <ion-textarea name="about" formControlName="about" placeholder="{{'placeholder-text.about' | translate}}"
+            cols="6" rows="6"></ion-textarea>
+        </ion-item>
+      </div>
+  
+      <div class="input-div">
+        <input type="file" hidden #fileUpload id="file" (change)="handleFileInput($event)" />
+        <div class="coverPlaceholder" (click)="fileUpload.click()">
+          <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+          <p>{{'common-words.upload-images' | translate}}</p>
+        </div>
+      </div>
+  
+      <div class="input-div">
+        <swiper #swiper [config]="config">
+          <ng-template swiperSlide *ngFor="let img of images; let i=index">
+            <ion-icon name="close-circle-outline" class="remove-icon" (click)="removeImage(i)"></ion-icon>
+            <img [src]="img.preview" class="swiper-img">
+          </ng-template>
+        </swiper>
+      </div>
+    </form>
+  
+    <div class="input-div">
+      <ion-button color="primary" expand="block" translate (click)="createAdd()" translate>{{'common-buttons.save' |
+        translate}}
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+
+  
 </ion-content>
