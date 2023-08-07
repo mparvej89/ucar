@@ -54,7 +54,7 @@
         "signup": "Sign Up",
         "see-listing": "See Listing",
         "login-email": "Continue with Email",
-        "save": "Save"
+        "save": "POST"
     },
     "placeholder-text": {
         "email": "Enter Your Email",

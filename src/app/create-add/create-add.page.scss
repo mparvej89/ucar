@@ -10,6 +10,9 @@ ion-item {
 
 .input-div {
   margin-top: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .v-error {
@@ -53,3 +56,15 @@ ion-datetime {
 ion-card {
   border-radius: 15px;
 }
+
+/* ion-input{
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600px;
+
+}
+ion-select{
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600px;
+} */

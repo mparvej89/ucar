@@ -115,7 +115,7 @@
       <ion-label>{{'common-words.year' | translate}}</ion-label>
       <ion-item lines="none">
         <ion-input value="{{ createAddForm.controls.year.value | date: 'yyyy' }}" id="triggercheckInStartDate"
-          class="ion-text-end" formControlName="year">
+          formControlName="year" placeholder="{{'common-words.year' | translate}}">
         </ion-input>
 
         <ion-modal trigger="triggercheckInStartDate" [initialBreakpoint]="0.45" [breakpoints]="[0, 0.25, 0.5, 0.75]">
@@ -222,7 +222,7 @@
   </form>
 
   <div class="input-div">
-    <ion-button color="primary" expand="block" translate (click)="createAdd()" translate>{{'common-buttons.save' |
+    <ion-button color="primary" expand="block" [disabled]="createAddForm.invalid" translate (click)="createAdd()" translate>{{'common-buttons.save' |
       translate}}
     </ion-button>
   </div>
