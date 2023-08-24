@@ -71,25 +71,13 @@ export class ApiService {
     })
   }
 
-  getPaginatedData(recordsPerPage, cursor?, type?): Observable<any> {
+  getPaginatedData(recordsPerPage, cursor?, type?, countryId?, cityId?): Observable<any> { 
     let queryFn: QueryFn;
     if (cursor === undefined) {
-      queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").limit(recordsPerPage);
-      /* if (type == 'ALL') {
-        queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").limit(recordsPerPage);
-      }
-      else {
-        queryFn = value => value.orderBy('id').where("type", "==", type).where("status", "==", "APPROVED").limit(recordsPerPage);
-      } */
+      queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").where("countryId.id", "==", countryId).limit(recordsPerPage);
 
     } else {
-      queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").limit(recordsPerPage).startAfter(cursor);
-      /* if (type == 'ALL') {
-        queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").limit(recordsPerPage).startAfter(cursor);
-      } else {
-        queryFn = value => value.orderBy('id').where("type", "==", type).where("status", "==", "APPROVED").limit(recordsPerPage).startAfter(cursor);
-      } */
-
+      queryFn = value => value.orderBy('id').where("status", "==", "APPROVED").where("countryId.id", "==", countryId).limit(recordsPerPage).startAfter(cursor);
     }
 
     return this.db

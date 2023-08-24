@@ -16,6 +16,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { LottieSplashScreen } from '@awesome-cordova-plugins/lottie-splash-screen/ngx';
+import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 export const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http, './assets/i18n/');
 
 @NgModule({
@@ -40,6 +41,7 @@ export const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new 
     }),
   ],
   providers: [
+    CallNumber,
     LottieSplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

@@ -3,10 +3,10 @@
     <ion-menu contentId="main-content" type="overlay" *ngIf="!isDesktop">
       <ion-content>
         <ion-avatar *ngIf="!user"> 
-          <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+          <img  src="../assets/logo/Logo.png" />
         </ion-avatar>
         <ion-avatar *ngIf="user"> 
-          <img alt="Silhouette of a person's head" [src]="user.imageUrl" />
+          <img  [src]="user.imageUrl" />
         </ion-avatar>
         <div class="user-name" *ngIf="user">
           <ion-text style="font-size: 18px;">{{user?.fullname}}</ion-text>

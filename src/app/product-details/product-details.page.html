@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="!isDesktop">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="tabs"></ion-back-button>
@@ -10,15 +10,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!isDesktop">
   <ion-card class="slider-card">
-    <swiper #swiper [config]="config" class="latest-swiper">
+    <swiper #swiper [config]="config" class="latest-swiper" (swiper)="swiper.swiperRef.autoplay.running = true">
       <ng-template swiperSlide *ngFor="let img of addDetails?.images">
         <ion-img [src]="img"></ion-img>
       </ng-template>
     </swiper>
     <ion-card-content class="card-content">
-      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price}}</ion-card-subtitle>
+      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
       <p class="lbl-sub">{{addDetails?.name}}</p>
     </ion-card-content>
   </ion-card>
@@ -44,7 +44,7 @@
           {{'common-words.kilometers' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.kilometer}}
+          {{addDetails?.kilometer | number:'1.0-0'}}
         </p>
       </ion-item>
       <!-- <ion-item class="items">
@@ -109,6 +109,134 @@
       <ion-button fill="outline">Message</ion-button>
       <ion-button fill="solid">Chat</ion-button>
       </div> -->
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="details">
+    <ion-card-header>
+      <ion-card-subtitle>Contact Details:</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item (click)="call(addDetails?.phone)">
+        <ion-label>{{addDetails?.phone}} </ion-label>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-content *ngIf="isDesktop">
+  <ion-card class="slider-card">
+    <swiper #swiper [config]="config" class="latest-swiper">
+      <ng-template swiperSlide *ngFor="let img of addDetails?.images">
+        <ion-img [src]="img"></ion-img>
+      </ng-template>
+    </swiper>
+    <ion-card-content class="card-content">
+      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
+      <p class="lbl-sub">{{addDetails?.name}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="details" class="ion-padding">
+    <ion-card-content>
+      <ion-text>
+        <h2>
+          {{'common-words.details' | translate}}
+        </h2>
+      </ion-text>
+      <ion-item class="items">
+        <ion-label>
+          {{addDetails?.about}}
+        </ion-label>
+        <!-- <p class="right">
+          {{addDetails?.about}}
+        </p> -->
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.kilometers' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.kilometer | number:'1.2-2'}}
+        </p>
+      </ion-item>
+      <!-- <ion-item class="items">
+        <ion-label>
+          Warranty
+        </ion-label>
+        <p class="right">
+          Does not apply
+        </p>
+      </ion-item> -->
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.year' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.year}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.country' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.countryId?.countryName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.city' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.cityId?.cityName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.brand' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.brandId?.brandName}}
+        </p>
+      </ion-item>
+
+      <ion-item class="items">
+        <ion-label>
+          {{'common-words.model' | translate}}
+        </ion-label>
+        <p class="right">
+          {{addDetails?.modelId?.modelName}}
+        </p>
+      </ion-item>
+
+      <!-- <div class="more-info">
+        <ion-text>Show more details</ion-text>
+      </div> -->
+      <!-- <div class="btn">
+        <ion-button fill="solid">Call</ion-button>
+      <ion-button fill="outline">Message</ion-button>
+      <ion-button fill="solid">Chat</ion-button>
+      </div> -->
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="details" class="ion-padding">
+    <ion-card-header>
+      <ion-card-subtitle>Contact Details:</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item (click)="call(addDetails?.phone)">
+        <ion-label>{{addDetails?.phone}} </ion-label>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 

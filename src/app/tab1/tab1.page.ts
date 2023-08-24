@@ -12,6 +12,7 @@ import { ScreensizeService } from '../services/screensize.service';
 import { SwiperComponent } from 'swiper/angular';
 import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, SwiperOptions, Zoom } from 'swiper';
 import { CreateAddPage } from '../create-add/create-add.page';
+import { ProductDetailsPage } from '../product-details/product-details.page';
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 @Component({
   selector: 'app-tab1',
@@ -30,10 +31,11 @@ export class Tab1Page implements OnInit {
   userId: any;
   adds: any[] = [];
   priceMinMax: boolean = false;
+  filterCity: boolean = false;
   minPrice: any = 0;
   maxPrice: any = 10000;
   activebtn: string = 'ALL';
-  recordsPerPage = 4;
+  recordsPerPage = 20;
   startAfterCursor: any;
   testList: any[] = [];
   endOfData = false;
@@ -52,6 +54,10 @@ export class Tab1Page implements OnInit {
     url: '../../assets/images/3.jpg'
   }];
   brands: any[] = [];
+  vehicleType: any[] = [];
+  isOpenPopover: boolean = false;
+  cities: any[] = [];
+  cityId: any;
   constructor(public router: Router,
     public modalCtrl: ModalController,
     public api: ApiService,
@@ -76,8 +82,9 @@ export class Tab1Page implements OnInit {
       if (res) {
         this.userDetails = res;
       }
-    })
+      this.getVehicleType();
 
+    })
 
     let country: any = localStorage.getItem('country')
     this.selectedCountry = JSON.parse(country);
@@ -91,11 +98,22 @@ export class Tab1Page implements OnInit {
     this.adds = [];
     this.getMoreData(null);
     //this.getBrands();
+    this.getCity()
   }
 
-  details(data: any) {
+  async details(data: any) {
     this.api.setAddDetails(data);
-    this.router.navigate(['./tabs/product-details']);
+    if (this.isDesktop) {
+      const modal = await this.modalCtrl.create({
+        component: ProductDetailsPage,
+        cssClass: 'custom-modal-details'
+      });
+      modal.present();
+    } else {
+      this.router.navigate(['./tabs/product-details']);
+    }
+
+
   }
   async countryCityModal() {
     const modal = await this.modalCtrl.create({
@@ -111,6 +129,8 @@ export class Tab1Page implements OnInit {
       this.selectedCountry = JSON.parse(country);
       let city: any = localStorage.getItem('city');
       this.selectedCity = JSON.parse(city);
+      this.getMoreData(null);
+      this.getCity()
     }
   }
 
@@ -197,6 +217,12 @@ export class Tab1Page implements OnInit {
 
   minmax() {
     this.priceMinMax = !this.priceMinMax;
+    this.filterCity = false;
+  }
+
+  cityFilter() {
+    this.filterCity = !this.filterCity;
+    this.priceMinMax = false;
   }
 
   seeList() {
@@ -217,21 +243,43 @@ export class Tab1Page implements OnInit {
 
   }
 
+  filterByCity() {
+    let tempAdd: any[] = [];
+    this.util.showLoading();
+    this.api.getAdds(null).then(res => {
+      if (res) {
+        tempAdd = res;
+        this.adds = tempAdd.filter((x) => {
+          return x.cityId.id == this.cityId
+        });
+        this.util.hideLoading();
+      }
+    }, err => {
+      this.util.hideLoading();
+    });
+    this.modalCtrl.dismiss();
+
+  }
+
   addtype(type?: string) {
     this.adds = [];
     this.activebtn = type;
-    this.recordsPerPage = 6;
+    this.recordsPerPage = 20;
     this.startAfterCursor = '';
     this.infinite.disabled = true;
     this.getMoreData(null);
   }
 
   getMoreData(event: any) {
-    this.testSubscription = this.api.getPaginatedData(this.recordsPerPage, this.startAfterCursor, this.activebtn)
+    this.testSubscription = this.api.getPaginatedData(this.recordsPerPage, this.startAfterCursor, this.activebtn, this.selectedCountry.id, this.selectedCity.id)
       .subscribe(result => {
         let resultData = (result.splice(0, this.recordsPerPage));
         if (this.activebtn != 'ALL') {
-          this.adds = resultData.filter(res => res?.type?.vehicleType.toLowerCase() == this.activebtn.toLowerCase());
+          resultData.forEach(element => {
+            if (element.type.id == this.activebtn) {
+              this.adds.push(element);
+            }
+          })
         }
         else {
           this.adds = resultData;
@@ -264,16 +312,28 @@ export class Tab1Page implements OnInit {
     this.isOpen = true;
   }
 
-  /* getBrands() {
-    this.brands = [];
-    this.db.collection('brands').get().subscribe((res: any) => {
+  getVehicleType() {
+    this.db.collection('vehicle_type').get().subscribe((res: any) => {
       res.forEach((element: any) => {
-        let tempBrands = element.data();
-        this.brands.push(tempBrands);
-        this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
-        console.log('this.brands', this.brands);
-
+        let vtype = element.data();
+        this.vehicleType.push(vtype);
       });
     })
-  } */
+  }
+
+  getTranslation(phrase: string) {
+    let tns = this.translate.instant(phrase);
+  }
+
+  getCity() {
+    this.cities = [];
+    this.db.collection('cities', ref => ref.where("countryId", "==", this.selectedCountry.id)).get().subscribe((res: any) => {
+      res.forEach((element: any) => {
+        let tempCity = element.data();
+        this.cities.push(tempCity);
+        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName))
+      });
+    })
+  }
+
 }

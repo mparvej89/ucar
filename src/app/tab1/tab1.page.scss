@@ -81,11 +81,12 @@
     padding-bottom: 8px;
     border-radius: 10px;
     background: #a2231f;
-    padding: 20px;
+    padding: 10px;
     margin: 0;
+    height: 82px;
 
     .img {
-        height: 96px;
+        height: 35px;
     }
 
     ion-label {
@@ -98,7 +99,7 @@
     }
 
     .category-title {
-        margin-top: 15px;
+        margin-top: 5px;
         color: #fff;
         font-weight: 600;
         font-size: 22px;
@@ -232,3 +233,57 @@ ion-input {
 ion-title{
     cursor: pointer;
 }
+.post-add{
+    display: flex;
+    justify-content: center;
+}
+.car-add{
+    position: absolute;
+    z-index: 9;
+    width: 415px;
+    top: 59%;
+    left: 140px;
+}
+.bike-add{
+    position: absolute;
+    z-index: 9;
+    width: 350px;
+    top: 41%;
+    right: 155px;
+}
+.car-card{
+    height: 310px;
+    background: #ca48443d;
+    border-radius: 16px;
+    ion-button{
+        --background: #e3b54685;
+    }
+}
+.bike-card{
+    height: 310px;
+    background: #e3b54642;
+    border-radius: 16px;
+    ion-button{
+        --background: #a2231f;
+    }
+}
+
+.input-div {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    ion-item {
+        border: 2px solid #d8d7d7;
+        box-sizing: border-box;
+        border-radius: 7px;
+        margin-top: 10px;
+        min-height: 50px;
+        --background: none;
+        margin-bottom: 6px;
+      }
+  }
+  ion-select {
+    width: 100%;
+  }
+  

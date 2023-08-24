@@ -17,7 +17,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ProductDetailsPageRoutingModule,
     SwiperModule,
     TranslateModule
-
   ],
   declarations: [ProductDetailsPage]
 })

@@ -157,7 +157,10 @@ export class CreateAddPage implements OnInit {
     const promises: any[] = [];
     if (this.images.length >= 0) {
       this.images.forEach(ele => {
-        promises.push(this.uploadImage(ele));
+        if (ele.base64) {
+          promises.push(this.uploadImage(ele));
+        }
+
       })
       Promise.all(promises)
         .then((results) => {
@@ -174,8 +177,8 @@ export class CreateAddPage implements OnInit {
                 this.images = [];
                 this.api.setAddDetails(null);
                 this.createAddForm.reset();
-                this.util.hideLoading();
                 this.util.presentToast('Add created successfully!');
+                this.util.hideLoading();
                 this.navCtrl.back();
               }
             }, err => {
@@ -194,8 +197,8 @@ export class CreateAddPage implements OnInit {
                 this.images = [];
                 this.api.setAddDetails(null);
                 this.createAddForm.reset();
-                this.util.hideLoading();
                 this.util.presentToast('Add update successfully!');
+                this.util.hideLoading();
                 this.navCtrl.back();
               }
             }, err => {
@@ -240,6 +243,10 @@ export class CreateAddPage implements OnInit {
 
   removeImage(i: any) {
     this.images.splice(i, 1);
+    if (this.updateImages) {
+      this.updateImages.splice(i, 1);
+    }
+
   }
 
   uploadImage(value: any) {
@@ -257,6 +264,7 @@ export class CreateAddPage implements OnInit {
 
 
   updateAdd() {
+    this.images = [];
     this.api.getAddDetails().subscribe(res => {
       if (res) {
         this.updateId = res.id;
@@ -274,6 +282,14 @@ export class CreateAddPage implements OnInit {
           type: res.type
         });
         this.updateImages = res.images;
+        this.updateImages.forEach(img => {
+          let data = {
+            preview: img
+          }
+          this.images.push(data);
+        })
+
+
       }
     })
   }

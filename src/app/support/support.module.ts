@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SupportPageRoutingModule } from './support-routing.module';
 
 import { SupportPage } from './support.page';
-import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
+
 
 @NgModule({
   imports: [
@@ -16,7 +16,6 @@ import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
     IonicModule,
     SupportPageRoutingModule
   ],
-  declarations: [SupportPage],
-  providers:[CallNumber]
+  declarations: [SupportPage]
 })
 export class SupportPageModule {}
