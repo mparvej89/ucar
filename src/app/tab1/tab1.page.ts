@@ -145,8 +145,6 @@ export class Tab1Page implements OnInit {
 
         const { data, role } = await modal.onWillDismiss();
         if (role === 'CONFIRM') {
-          console.log(data);
-
           //this.message = `Hello, ${data}!`;
         }
       }

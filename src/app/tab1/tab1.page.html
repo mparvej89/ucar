@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity">{{selectedCountry?.countryName}}
+    <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity">{{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}}
       <!-- ({{selectedCity?.cityName}}) --></ion-title>
     <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
     <ion-avatar slot="end">
@@ -17,7 +17,7 @@
     <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity">
       <div class="drop-icon">
         <span>
-          {{selectedCountry?.countryName}} <!-- ({{selectedCity?.cityName}}) --></span>
+          {{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}} <!-- ({{selectedCity?.cityName}}) --></span>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
     </ion-title>
@@ -51,7 +51,7 @@
           <ion-item>
             <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img>
             <ion-label>
-              Arabic
+              عربي
             </ion-label>
           </ion-item>
         </ion-content>
@@ -201,7 +201,7 @@
                   <ion-item lines="none">
                     <ion-select placeholder="{{'common-words.select-city' | translate}}" [(ngModel)]="cityId">
                       <ion-select-option *ngFor="let city of cities"
-                        [value]="city.id">{{city.cityName}}</ion-select-option>
+                        [value]="city.id">{{translate.currentLang=='ar'?city.cityName:city.encityName}}</ion-select-option>
                     </ion-select>
                   </ion-item>
                 </div>
@@ -223,13 +223,13 @@
     <ion-card class="product-card" *ngFor="let add of adds" (click)="details(add)">
       <ion-img class="product-img" [src]="add.images[0]"></ion-img>
       <ion-card-content class="card-content">
-        <ion-card-subtitle>{{add.countryId.currency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{translate.currentLang=='ar'? add.countryId.currency: add.countryId.encurrency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
         <p class="lbl-sub-name">{{add?.name}}</p>
-        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{add?.brandId?.brandName}}</p>
-        <p class="lbl-sub">{{'common-words.model' | translate}}: {{add?.modelId?.modelName}}</p>
+        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar'? add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
+        <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar'? add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
         <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
         <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer | number:'1.0-0'}}</p>
-        <p class="lbl-sub">{{'common-words.city' | translate}}: {{add?.cityId?.cityName}}</p>
+        <p class="lbl-sub">{{'common-words.city' | translate}}: {{translate.currentLang=='ar'? add?.cityId?.cityName: add?.cityId?.encityName}}</p>
       </ion-card-content>
     </ion-card>
 
@@ -256,7 +256,7 @@
           <ion-item>
             <ion-img src="../../assets/icon/sau.svg" class="flug"></ion-img>
             <ion-label>
-              Arabic
+              عربي
             </ion-label>
           </ion-item>
         </ion-content>
@@ -512,13 +512,13 @@
         <ion-card class="product-card" (click)="details(add)">
           <ion-img class="product-img" [src]="add.images[0]"></ion-img>
           <ion-card-content class="card-content">
-            <ion-card-subtitle>{{add.countryId.currency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+            <ion-card-subtitle>{{translate.currentLang=='ar' ? add.countryId.currency:add.countryId.encurrency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
             <p class="lbl-sub-name">{{add?.name}}</p>
-            <p class="lbl-sub">{{'common-words.brand' | translate}}: {{add?.brandId?.brandName}}</p>
-            <p class="lbl-sub">{{'common-words.model' | translate}}: {{add?.modelId?.modelName}}</p>
+            <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar' ? add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
+            <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar' ?add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
             <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
             <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer | number:'1.0-0'}}</p>
-            <p class="lbl-sub">{{'common-words.city' | translate}}: {{add?.cityId?.cityName}}</p>
+            <p class="lbl-sub">{{'common-words.city' | translate}}: {{translate.currentLang=='ar'?add?.cityId?.cityName:add?.cityId?.encityName}}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -4,6 +4,7 @@ import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, SwiperOptions, Z
 import { ApiService } from '../services/api.service';
 import { ScreensizeService } from '../services/screensize.service';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
+import { TranslateService } from '@ngx-translate/core';
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 
 @Component({
@@ -24,7 +25,8 @@ export class ProductDetailsPage implements OnInit {
   isDesktop: boolean = false;
   constructor(public api: ApiService,
     private screensizeService: ScreensizeService,
-    private callNumber: CallNumber) {
+    private callNumber: CallNumber,
+    public translate:TranslateService) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
     })

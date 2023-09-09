@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-country-city',
@@ -12,7 +13,9 @@ export class CountryCityComponent implements OnInit {
   cities: any[] = [];
   selectedCountry: any;
   selectedCity: any;
-  constructor(private modalCtrl: ModalController, private db: AngularFirestore) { }
+  constructor(private modalCtrl: ModalController, 
+    private db: AngularFirestore,
+    public translate: TranslateService) { }
 
   ngOnInit() {
     this.db.collection('countries').valueChanges().subscribe(res => {

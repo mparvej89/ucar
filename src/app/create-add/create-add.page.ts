@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScreensizeService } from '../services/screensize.service';
 import { ModalController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-add',
@@ -45,7 +46,8 @@ export class CreateAddPage implements OnInit {
     private screensizeService: ScreensizeService,
     private modalCtrl: ModalController,
     private navCtrl: NavController,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    public translate: TranslateService) {
     this.createAddForm = this.formBuilder.group({
       countryId: new FormControl('', [Validators.required]),
       cityId: new FormControl('', [Validators.required]),
@@ -93,7 +95,6 @@ export class CreateAddPage implements OnInit {
 
   }
   ionViewWillEnter() {
-    console.log('cons');
     if (this.title == 'Edit') {
       this.updateAdd();
     }
@@ -120,15 +121,13 @@ export class CreateAddPage implements OnInit {
 
 
   selectType(event: any) {
-    console.log(event.detail.value);
-
     this.getBrands(event.detail.value);
   }
 
 
   getBrands(type: any) {
     this.brands = [];
-    this.db.collection('brands', ref => ref.where("vehicleType", "==", type)).get().subscribe((res: any) => {
+    this.db.collection('brands', ref => ref.where("vehicleType.id", "==", type.id)).get().subscribe((res: any) => {
       res.forEach((element: any) => {
         let tempBrands = element.data();
         this.brands.push(tempBrands);

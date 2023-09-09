@@ -18,7 +18,7 @@
       </ng-template>
     </swiper>
     <ion-card-content class="card-content">
-      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
+      <ion-card-subtitle>{{translate.currentLang=='ar'?addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
       <p class="lbl-sub">{{addDetails?.name}}</p>
     </ion-card-content>
   </ion-card>
@@ -70,7 +70,7 @@
           {{'common-words.country' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.countryId?.countryName}}
+          {{translate.currentLang=='ar'? addDetails?.countryId?.countryName:addDetails?.countryId?.encountryName}}
         </p>
       </ion-item>
 
@@ -79,7 +79,7 @@
           {{'common-words.city' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.cityId?.cityName}}
+          {{translate.currentLang=='ar'? addDetails?.cityId?.cityName:addDetails?.cityId?.encityName}}
         </p>
       </ion-item>
 
@@ -88,7 +88,7 @@
           {{'common-words.brand' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.brandId?.brandName}}
+          {{translate.currentLang=='ar'? addDetails?.brandId?.brandName:addDetails?.brandId?.enbrandName}}
         </p>
       </ion-item>
 
@@ -97,7 +97,7 @@
           {{'common-words.model' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.modelId?.modelName}}
+          {{translate.currentLang=='ar'? addDetails?.modelId?.modelName:addDetails?.modelId?.enmodelName}}
         </p>
       </ion-item>
 
@@ -134,7 +134,7 @@
       </ng-template>
     </swiper>
     <ion-card-content class="card-content">
-      <ion-card-subtitle>{{addDetails.countryId.currency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
+      <ion-card-subtitle>{{translate.currentLang=='ar'? addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
       <p class="lbl-sub">{{addDetails?.name}}</p>
     </ion-card-content>
   </ion-card>
@@ -186,7 +186,7 @@
           {{'common-words.country' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.countryId?.countryName}}
+          {{translate.currentLang=='ar'? addDetails?.countryId?.countryName:addDetails?.countryId?.encountryName}}
         </p>
       </ion-item>
 
@@ -195,7 +195,7 @@
           {{'common-words.city' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.cityId?.cityName}}
+          {{translate.currentLang=='ar'? addDetails?.cityId?.cityName:addDetails?.cityId?.encityName}}
         </p>
       </ion-item>
 
@@ -204,7 +204,7 @@
           {{'common-words.brand' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.brandId?.brandName}}
+          {{translate.currentLang=='ar'? addDetails?.brandId?.brandName:addDetails?.brandId?.enbrandName}}
         </p>
       </ion-item>
 
@@ -213,7 +213,7 @@
           {{'common-words.model' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.modelId?.modelName}}
+          {{translate.currentLang=='ar'? addDetails?.modelId?.modelName:addDetails?.modelId?.enmodelName}}
         </p>
       </ion-item>
 

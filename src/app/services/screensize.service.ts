@@ -14,7 +14,6 @@ export class ScreensizeService {
   }
 
  onResize(size){
-   console.log('Size:',size)
   this.screenWidth = size;
    if (size <= 820){
      this.isDesktop.next(false);

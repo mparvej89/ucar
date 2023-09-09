@@ -34,7 +34,7 @@
         <ion-select placeholder="{{'common-words.select-country' | translate}}" name="countryId"
           formControlName="countryId" (ionChange)="selectCountry($event)" [compareWith]="compareCountry">
           <ion-select-option *ngFor="let country of countries"
-            [value]="country">{{country.countryName}}</ion-select-option>
+            [value]="country">{{translate.currentLang=='ar'?country.countryName:country.encountryName}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div *ngIf="createAddForm.controls.countryId.touched && createAddForm.controls.countryId.errors?.required"
@@ -48,7 +48,7 @@
       <ion-item lines="none">
         <ion-select placeholder="{{'common-words.select-city' | translate}}" name="cityId" formControlName="cityId"
           (ionChange)="selectCity($event)" [compareWith]="compareCity">
-          <ion-select-option *ngFor="let city of cities" [value]="city">{{city.cityName}}</ion-select-option>
+          <ion-select-option *ngFor="let city of cities" [value]="city">{{translate.currentLang=='ar'?city.cityName:city.encityName}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div *ngIf="createAddForm.controls.cityId.touched && createAddForm.controls.cityId.errors?.required"
@@ -75,7 +75,7 @@
       <ion-label>{{'common-words.vehicle-type' | translate}}</ion-label>
       <ion-item lines="none">
         <ion-select placeholder="Select Type" name="type" formControlName="type" (ionChange)="selectType($event)">
-          <ion-select-option [value]="vtype" *ngFor="let vtype of vehicleTypes">{{vtype.vehicleType}}</ion-select-option>
+          <ion-select-option [value]="vtype" *ngFor="let vtype of vehicleTypes">{{translate.currentLang=='ar'?vtype.vehicleType:vtype.envehicleType}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div *ngIf="createAddForm.controls.type.touched && createAddForm.controls.type.errors?.required" class="v-error">
@@ -88,7 +88,7 @@
       <ion-item lines="none">
         <ion-select placeholder="{{'common-words.select-brand' | translate}}" name="brandId" formControlName="brandId"
           (ionChange)="selectBrand($event)" [compareWith]="compareBrand">
-          <ion-select-option *ngFor="let brand of brands" [value]="brand">{{brand.brandName}}</ion-select-option>
+          <ion-select-option *ngFor="let brand of brands" [value]="brand">{{translate.currentLang=='ar'?brand.brandName:brand.enbrandName}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div *ngIf="createAddForm.controls.brandId.touched && createAddForm.controls.brandId.errors?.required"
@@ -102,7 +102,7 @@
       <ion-item lines="none">
         <ion-select placeholder="{{'common-words.select-model' | translate}}" name="modelId"
           [compareWith]="compareModel" formControlName="modelId">
-          <ion-select-option *ngFor="let model of models" [value]="model">{{model.modelName}}</ion-select-option>
+          <ion-select-option *ngFor="let model of models" [value]="model">{{translate.currentLang=='ar'?model.modelName:model.enmodelName}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div *ngIf="createAddForm.controls.modelId.touched && createAddForm.controls.modelId.errors?.required"
@@ -241,7 +241,7 @@
           <ion-select placeholder="{{'common-words.select-country' | translate}}" name="countryId"
             formControlName="countryId" (ionChange)="selectCountry($event)" [compareWith]="compareCountry">
             <ion-select-option *ngFor="let country of countries"
-              [value]="country">{{country.countryName}}</ion-select-option>
+              [value]="country">{{translate.currentLang=='ar'?country.countryName:country.encountryName}}</ion-select-option>
           </ion-select>
         </ion-item>
         <div *ngIf="createAddForm.controls.countryId.touched && createAddForm.controls.countryId.errors?.required"
@@ -255,7 +255,7 @@
         <ion-item lines="none">
           <ion-select placeholder="{{'common-words.select-city' | translate}}" name="cityId" formControlName="cityId"
             (ionChange)="selectCity($event)" [compareWith]="compareCity">
-            <ion-select-option *ngFor="let city of cities" [value]="city">{{city.cityName}}</ion-select-option>
+            <ion-select-option *ngFor="let city of cities" [value]="city">{{translate.currentLang=='ar'?city.cityName:city.encityName}}</ion-select-option>
           </ion-select>
         </ion-item>
         <div *ngIf="createAddForm.controls.cityId.touched && createAddForm.controls.cityId.errors?.required"
@@ -282,7 +282,7 @@
         <ion-label>{{'common-words.vehicle-type' | translate}}</ion-label>
         <ion-item lines="none">
           <ion-select placeholder="Select Type" name="type" formControlName="type" (ionChange)="selectType($event)">
-            <ion-select-option [value]="vtype" *ngFor="let vtype of vehicleTypes">{{vtype.vehicleType}}</ion-select-option>
+            <ion-select-option [value]="vtype" *ngFor="let vtype of vehicleTypes">{{translate.currentLang=='ar'?vtype.vehicleType:vtype.envehicleType}}</ion-select-option>
           </ion-select>
         </ion-item>
         <div *ngIf="createAddForm.controls.type.touched && createAddForm.controls.type.errors?.required" class="v-error">
@@ -295,7 +295,7 @@
         <ion-item lines="none">
           <ion-select placeholder="{{'common-words.select-brand' | translate}}" name="brandId" formControlName="brandId"
             (ionChange)="selectBrand($event)" [compareWith]="compareBrand">
-            <ion-select-option *ngFor="let brand of brands" [value]="brand">{{brand.brandName}}</ion-select-option>
+            <ion-select-option *ngFor="let brand of brands" [value]="brand">{{translate.currentLang=='ar'?brand.brandName:brand.enbrandName}}</ion-select-option>
           </ion-select>
         </ion-item>
         <div *ngIf="createAddForm.controls.brandId.touched && createAddForm.controls.brandId.errors?.required"
@@ -309,7 +309,7 @@
         <ion-item lines="none">
           <ion-select placeholder="{{'common-words.select-model' | translate}}" name="modelId"
             [compareWith]="compareModel" formControlName="modelId">
-            <ion-select-option *ngFor="let model of models" [value]="model">{{model.modelName}}</ion-select-option>
+            <ion-select-option *ngFor="let model of models" [value]="model">{{translate.currentLang=='ar'?model.modelName:model.enmodelName}}</ion-select-option>
           </ion-select>
         </ion-item>
         <div *ngIf="createAddForm.controls.modelId.touched && createAddForm.controls.modelId.errors?.required"

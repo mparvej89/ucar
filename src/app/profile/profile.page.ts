@@ -32,7 +32,6 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.api.getUserDetails().subscribe(res => {
       if (res) {
-        console.log(res);
         this.userDetails = res;
         this.personalInfoForm.patchValue({
           fullname: res.fullname,

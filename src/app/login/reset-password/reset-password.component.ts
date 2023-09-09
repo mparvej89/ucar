@@ -29,7 +29,6 @@ export class ResetPasswordComponent implements OnInit {
   forgotPass() {
     this.util.showLoading();
     this.authService.resetPassword(this.ForgotForm.value.email).then(res => {
-      console.log(res);
       this.util.hideLoading();
       if (res == 'success') {
         this.util.presentToast('Reset Password link is sent to your email');

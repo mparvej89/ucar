@@ -13,13 +13,14 @@
   <ion-list>
     <ion-item>
       <ion-select placeholder="{{'common-words.select-country' | translate}}" (ionChange)="selectCountry($event)">
-        <ion-select-option *ngFor="let country of countries" [value]="country">{{country.countryName}}</ion-select-option>
+        <ion-select-option *ngFor="let country of countries" [value]="country">{{translate.currentLang=='ar'?
+          country.countryName : country.encountryName}}</ion-select-option>
       </ion-select>
     </ion-item>
-
     <ion-item>
       <ion-select placeholder="{{'common-words.select-city' | translate}}" (ionChange)="selectCity($event)">
-        <ion-select-option *ngFor="let city of cities" [value]="city">{{city.cityName}}</ion-select-option>
+        <ion-select-option *ngFor="let city of cities" [value]="city">{{translate.currentLang=='ar'?
+          city.cityName:city.encityName}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
