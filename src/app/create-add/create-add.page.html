@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
-    <ion-avatar slot="end">
+    <ion-avatar slot="end" class="ion-avatar">
       <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
     </ion-avatar>
   </ion-toolbar>
@@ -120,7 +120,7 @@
 
         <ion-modal trigger="triggercheckInStartDate" [initialBreakpoint]="0.45" [breakpoints]="[0, 0.25, 0.5, 0.75]">
           <ng-template>
-            <ion-datetime presentation="year" formControlName="year" [showDefaultButtons]="true"
+            <ion-datetime presentation="year" formControlName="year" [(ngModel)]="year" [showDefaultButtons]="true"
               [showDefaultTitle]="true" doneText="Ok" cancelText="Cancel">
               <span slot="title">Year</span>
             </ion-datetime>
@@ -174,6 +174,8 @@
 
         {{'error-message.price-valid' | translate}}
       </div>
+
+      
     </div>
 
     <div class="input-div">
@@ -188,8 +190,14 @@
         {{'error-message.phone' | translate}}
       </div>
       <div *ngIf="createAddForm.controls.phone.touched && createAddForm.controls.phone.errors?.pattern" class="v-error">
-
         {{'error-message.phone-valid' | translate}}
+      </div>
+
+      <div *ngIf="createAddForm.controls.phone.touched && createAddForm.controls.phone.errors?.minlength" class="v-error">
+        {{'error-message.phone-length' | translate}} 
+      </div>
+      <div *ngIf="createAddForm.controls.phone.touched && createAddForm.controls.phone.errors?.maxlength" class="v-error">
+        {{'error-message.phone-length' | translate}}
       </div>
     </div>
 

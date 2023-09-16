@@ -84,7 +84,8 @@
         "price": "Price is required",
         "price-valid": "Please enter the numbers in english",
         "phone": "Phone is required",
-        "phone-valid": "Please enter the numbers in english"
+        "phone-valid": "Please enter the numbers in english",
+        "phone-length": "Mobile number must be 10 digit"
     },
     "side-bar-menu": {
         "profile": "Profile",

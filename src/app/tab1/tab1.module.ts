@@ -17,6 +17,6 @@ import { SwiperModule } from 'swiper/angular';
     TranslateModule,
     SwiperModule
   ],
-  declarations: [Tab1Page, SearchComponent,CountryCityComponent]
+  declarations: [Tab1Page, SearchComponent, CountryCityComponent]
 })
 export class Tab1PageModule {}

@@ -21,12 +21,28 @@ const routes: Routes = [
     component: ImageUploadComponent
   },
   {
+    path: 'tab1',
+    loadChildren: () => import('./tab1/tab1.module').then(m => m.Tab1PageModule)
+  },
+  {
+    path: 'my-adds',
+    loadChildren: () => import('./my-adds/my-adds.module').then( m => m.MyAddsPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'support',
+    loadChildren: () => import('./support/support.module').then( m => m.SupportPageModule)
+  },
+  {
     path: 'terms-condition',
     loadChildren: () => import('./terms-condition/terms-condition.module').then( m => m.TermsConditionPageModule)
   },
   {
-    path: 'tab1',
-    loadChildren: () => import('./tab1/tab1.module').then(m => m.Tab1PageModule)
+    path: 'about-us',
+    loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
   }
 ];
 @NgModule({

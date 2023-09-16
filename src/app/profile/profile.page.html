@@ -1,10 +1,18 @@
-<ion-header>
+<ion-header *ngIf="!isDesktop">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="tabs"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile</ion-title>
-    <ion-avatar slot="end">
+    <ion-avatar slot="end" class="ion-avatar">
+      <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+<ion-header *ngIf="isDesktop">
+  <ion-toolbar color="primary">
+    <ion-title>Profile</ion-title>
+    <ion-avatar slot="end" class="ion-avatar">
       <img alt="Silhouette of a person's head" src="../assets/logo/Logo.png" />
     </ion-avatar>
   </ion-toolbar>

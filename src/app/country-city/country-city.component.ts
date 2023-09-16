@@ -13,7 +13,7 @@ export class CountryCityComponent implements OnInit {
   cities: any[] = [];
   selectedCountry: any;
   selectedCity: any;
-  constructor(private modalCtrl: ModalController, 
+  constructor(private modalCtrl: ModalController,
     private db: AngularFirestore,
     public translate: TranslateService) { }
 
@@ -21,7 +21,13 @@ export class CountryCityComponent implements OnInit {
     this.db.collection('countries').valueChanges().subscribe(res => {
       if (res) {
         this.countries = res;
-        this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
+        if (this.translate.currentLang == 'ar') {
+          this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
+        }
+        else {
+          this.countries.sort((a, b) => a.encountryName.localeCompare(b.encountryName));
+        }
+
       }
     })
   }
@@ -50,8 +56,12 @@ export class CountryCityComponent implements OnInit {
       res.forEach((element: any) => {
         let tempCity = element.data();
         this.cities.push(tempCity);
-        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName));
-        
+        if (this.translate.currentLang == 'ar') {
+          this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName));
+        }
+        else {
+          this.cities.sort((a, b) => a.encityName.localeCompare(b.encityName));
+        }
       });
     })
   }

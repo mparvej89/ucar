@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -13,6 +13,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  @Input() isDesktop: boolean;
   personalInfoForm: FormGroup;
   userDetails: any;
   constructor(private api: ApiService,

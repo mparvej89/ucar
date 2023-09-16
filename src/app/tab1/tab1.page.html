@@ -3,10 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity">{{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}}
+    <ion-title (click)="countryCityModal()"
+      *ngIf="selectedCountry && selectedCity">{{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}}
       <!-- ({{selectedCity?.cityName}}) --></ion-title>
     <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
-    <ion-avatar slot="end">
+    <ion-avatar slot="end" class="ion-avatar">
       <img src="../assets/logo/Logo.png" />
     </ion-avatar>
   </ion-toolbar>
@@ -17,20 +18,24 @@
     <ion-title (click)="countryCityModal()" *ngIf="selectedCountry && selectedCity">
       <div class="drop-icon">
         <span>
-          {{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}} <!-- ({{selectedCity?.cityName}}) --></span>
+          {{translate.currentLang=='ar'?selectedCountry?.countryName:selectedCountry?.encountryName}}
+          <!-- ({{selectedCity?.cityName}}) --></span>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
     </ion-title>
     <ion-title (click)="countryCityModal()" *ngIf="!selectedCountry && !selectedCity">Select Location</ion-title>
-    <ion-avatar slot="start">
+    <ion-avatar slot="start" class="ion-avatar">
       <img src="../assets/logo/Logo.png" />
     </ion-avatar>
-
-
     <ion-title slot="end">
       <span style="margin-right: 35px;">info@u-car.biz</span>
       <span>+966 55 507 0917</span>
     </ion-title>
+
+    <ion-avatar slot="end" id="click-trigger" mode="ios">
+      <img
+        [src]="userDetails?.imageUrl ? userDetails?.imageUrl :'https://ionicframework.com/docs/img/demos/avatar.svg'" />
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
@@ -223,13 +228,17 @@
     <ion-card class="product-card" *ngFor="let add of adds" (click)="details(add)">
       <ion-img class="product-img" [src]="add.images[0]"></ion-img>
       <ion-card-content class="card-content">
-        <ion-card-subtitle>{{translate.currentLang=='ar'? add.countryId.currency: add.countryId.encurrency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{translate.currentLang=='ar'? add.countryId.currency: add.countryId.encurrency}} {{add.price
+          | number:'1.2-2'}}</ion-card-subtitle>
         <p class="lbl-sub-name">{{add?.name}}</p>
-        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar'? add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
-        <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar'? add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
+        <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar'?
+          add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
+        <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar'?
+          add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
         <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
         <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer | number:'1.0-0'}}</p>
-        <p class="lbl-sub">{{'common-words.city' | translate}}: {{translate.currentLang=='ar'? add?.cityId?.cityName: add?.cityId?.encityName}}</p>
+        <p class="lbl-sub">{{'common-words.city' | translate}}: {{translate.currentLang=='ar'? add?.cityId?.cityName:
+          add?.cityId?.encityName}}</p>
       </ion-card-content>
     </ion-card>
 
@@ -465,7 +474,7 @@
     </ion-modal>
 
 
-    <ion-modal #modal trigger="open-filters" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <!-- <ion-modal #modal trigger="open-filters" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
       <ng-template>
         <ion-content class="ion-padding">
           <ion-list>
@@ -501,6 +510,69 @@
           </div>
         </ion-content>
       </ng-template>
+    </ion-modal> -->
+
+    <ion-modal #modal trigger="open-filters" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item detail (click)="minmax()">
+              <ion-label>
+                <h2> {{'common-words.price'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+
+            <ion-item detail (click)="cityFilter()">
+              <ion-label>
+                <h2> {{'common-words.select-city'| translate}}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div *ngIf="priceMinMax">
+            <ion-row>
+              <ion-col size="12">
+                <ion-item lines="none" class="ion-item-input">
+                  <ion-label>
+                    {{'common-words.min'| translate}}
+                  </ion-label>
+                  <ion-input [(ngModel)]="minPrice"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item lines="none" class="ion-item-input">
+                  <ion-label>
+                    {{'common-words.max'| translate}}
+                  </ion-label>
+                  <ion-input [(ngModel)]="maxPrice"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <div>
+              <ion-button fill="outline" expand="block" size="small" (click)="seeList()"
+                translate>common-buttons.see-listing</ion-button>
+            </div>
+          </div>
+
+          <div *ngIf="filterCity">
+            <ion-row>
+              <ion-col size="12">
+                <div class="input-div">
+                  <ion-item lines="none">
+                    <ion-select placeholder="{{'common-words.select-city' | translate}}" [(ngModel)]="cityId">
+                      <ion-select-option *ngFor="let city of cities"
+                        [value]="city.id">{{translate.currentLang=='ar'?city.cityName:city.encityName}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+              </ion-col>
+            </ion-row>
+            <div>
+              <ion-button fill="outline" expand="block" size="small" (click)="filterByCity()"
+                translate>common-buttons.see-listing</ion-button>
+            </div>
+          </div>
+        </ion-content>
+      </ng-template>
     </ion-modal>
 
     <div class="not-found" *ngIf='adds.length==0'>
@@ -512,18 +584,67 @@
         <ion-card class="product-card" (click)="details(add)">
           <ion-img class="product-img" [src]="add.images[0]"></ion-img>
           <ion-card-content class="card-content">
-            <ion-card-subtitle>{{translate.currentLang=='ar' ? add.countryId.currency:add.countryId.encurrency}} {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+            <ion-card-subtitle>{{translate.currentLang=='ar' ? add.countryId.currency:add.countryId.encurrency}}
+              {{add.price | number:'1.2-2'}}</ion-card-subtitle>
             <p class="lbl-sub-name">{{add?.name}}</p>
-            <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar' ? add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
-            <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar' ?add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
+            <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar' ?
+              add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
+            <p class="lbl-sub">{{'common-words.model' | translate}}: {{translate.currentLang=='ar'
+              ?add?.modelId?.modelName:add?.modelId?.enmodelName}}</p>
             <p class="lbl-sub">{{'common-words.year' | translate}}: {{add.year}}</p>
             <p class="lbl-sub">{{'common-words.km' | translate}}: {{add.kilometer | number:'1.0-0'}}</p>
-            <p class="lbl-sub">{{'common-words.city' | translate}}: {{translate.currentLang=='ar'?add?.cityId?.cityName:add?.cityId?.encityName}}</p>
+            <p class="lbl-sub">{{'common-words.city' | translate}}:
+              {{translate.currentLang=='ar'?add?.cityId?.cityName:add?.cityId?.encityName}}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
 
+
+    <ion-popover trigger="click-trigger" triggerAction="click">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-chip>
+            <ion-avatar>
+              <img
+                [src]="userDetails?.imageUrl ? userDetails?.imageUrl :'https://ionicframework.com/docs/img/demos/avatar.svg'" />
+            </ion-avatar>
+            <ion-label>{{userDetails?.fullname}}</ion-label>
+          </ion-chip>
+          <ion-item *ngFor="let p of appPages" (click)="route(p.url)">
+            <ion-label>
+              {{p.title | translate}}
+            </ion-label>
+          </ion-item>
+
+          <!-- <ion-item>
+            <ion-label>
+              {{'side-bar-menu.My-Ads' | translate}}
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              {{'side-bar-menu.about' | translate}}
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              {{'side-bar-menu.support' | translate}}
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              {{'side-bar-menu.Terms-Condition' | translate}}
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              {{'side-bar-menu.Logout' | translate}}
+            </ion-label>
+          </ion-item> -->
+        </ion-content>
+      </ng-template>
+    </ion-popover>
 
 
     <ion-infinite-scroll (ionInfinite)="getMoreData($event)">
@@ -532,3 +653,21 @@
     </ion-infinite-scroll>
   </div>
 </ion-content>
+
+<ion-footer *ngIf="isDesktop">
+  <ion-toolbar color="primary">
+    <div class="ion-padding">
+      <ion-row>
+        <ion-col size="3">
+          1st
+        </ion-col>
+        <ion-col size="3">
+          2st
+        </ion-col>
+        <ion-col size="6">
+          3st
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-toolbar>
+</ion-footer>

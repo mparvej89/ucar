@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { UtilService } from '../services/util.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { CreateAddPage } from '../create-add/create-add.page';
 
 @Component({
   selector: 'app-my-adds',
@@ -11,13 +12,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./my-adds.page.scss'],
 })
 export class MyAddsPage implements OnInit {
+  @Input() isDesktop: boolean;
   adds: any[] = [];
-  userDetails:any;
+  userDetails: any;
   constructor(public api: ApiService,
     public util: UtilService,
     private actionSheetCtrl: ActionSheetController,
     private db: AngularFirestore,
-    public router: Router) { }
+    public router: Router,
+    private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.api.getUserDetails().subscribe(res => {
@@ -25,9 +28,9 @@ export class MyAddsPage implements OnInit {
         this.userDetails = res;
       }
     })
-    
+
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getAdds();
   }
 
@@ -77,10 +80,23 @@ export class MyAddsPage implements OnInit {
     }
     else if (result.data.action == "EDIT") {
       this.api.setAddDetails(ad);
-      this.router.navigate(['./tabs/create-add/Edit']);
+      if (this.isDesktop) {
+        this.createAdd()
+      }
+      else {
+        this.router.navigate(['./tabs/create-add/Edit']);
+      }
+
     }
+  }
 
-
+  async createAdd() {
+    const modal = await this.modalCtrl.create({
+      component: CreateAddPage,
+      cssClass: 'custom-modal',
+      componentProps: { isDesktop: true, isEdit: true }
+    });
+    modal.present();
   }
 
 }

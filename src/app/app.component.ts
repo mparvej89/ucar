@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       localStorage.setItem('language', this.translate.currentLang);
     }
 
-    
+
   }
   @HostListener('window:resize', ['$event'])
   private onResize(event) {
@@ -104,6 +104,7 @@ export class AppComponent implements OnInit {
   route(url) {
     if (url == 'logout') {
       this.auth.logout().then(res => {
+        localStorage.clear();
         this.api.setUserDetails(null);
         //window.location.reload();
       }, err => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilService } from '../services/util.service';
@@ -17,6 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./create-add.page.scss'],
 })
 export class CreateAddPage implements OnInit {
+  @Input() isEdit: boolean;
   title: string = '';
   createAddForm: any;
   countries: any[] = [];
@@ -37,6 +38,7 @@ export class CreateAddPage implements OnInit {
   }
   vehicleTypes: any[] = [];
   isDesktop: boolean;
+  year: any = new Date().getFullYear();
   constructor(private db: AngularFirestore,
     public util: UtilService,
     private storage: AngularFireStorage,
@@ -54,10 +56,10 @@ export class CreateAddPage implements OnInit {
       address: new FormControl('', [Validators.required]),
       brandId: new FormControl('', [Validators.required]),
       modelId: new FormControl('', [Validators.required]),
-      year: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{4}$")]),
+      year: new FormControl(this.year, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{4}$")]),
       kilometer: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]*$"), Validators.minLength(4), Validators.min(1000)]),
       price: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]*$")]),
-      phone: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      phone: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]),
       about: new FormControl(''),
       type: new FormControl('', [Validators.required]),
     });
@@ -79,7 +81,13 @@ export class CreateAddPage implements OnInit {
     this.db.collection('countries').valueChanges().subscribe(res => {
       if (res) {
         this.countries = res;
-        this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
+        if (this.translate.currentLang == 'ar') {
+          this.countries.sort((a, b) => a.countryName.localeCompare(b.countryName));
+        }
+        else {
+          this.countries.sort((a, b) => a.encountryName.localeCompare(b.encountryName));
+        }
+
       }
     });
 
@@ -95,7 +103,7 @@ export class CreateAddPage implements OnInit {
 
   }
   ionViewWillEnter() {
-    if (this.title == 'Edit') {
+    if (this.title == 'Edit' || this.isEdit) {
       this.updateAdd();
     }
   }
@@ -110,7 +118,13 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempCity = element.data();
         this.cities.push(tempCity);
-        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName))
+        if (this.translate.currentLang == 'ar') {
+          this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName))
+        }
+        else {
+          this.cities.sort((a, b) => a.encityName.localeCompare(b.encityName))
+        }
+
       });
     })
   }
@@ -131,7 +145,13 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempBrands = element.data();
         this.brands.push(tempBrands);
-        this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
+        if (this.translate.currentLang == 'ar') {
+          this.brands.sort((a, b) => a.brandName.localeCompare(b.brandName));
+        }
+        else {
+          this.brands.sort((a, b) => a.enbrandName.localeCompare(b.enbrandName));
+        }
+
       });
     })
   }
@@ -146,7 +166,12 @@ export class CreateAddPage implements OnInit {
       res.forEach((element: any) => {
         let tempModel = element.data();
         this.models.push(tempModel);
-        this.models.sort((a, b) => a.modelName.localeCompare(b.modelName));
+        if (this.translate.currentLang == 'ar') {
+          this.models.sort((a, b) => a.modelName.localeCompare(b.modelName));
+        } else {
+          this.models.sort((a, b) => a.enmodelName.localeCompare(b.enmodelName));
+        }
+
       });
     })
   }
@@ -163,7 +188,7 @@ export class CreateAddPage implements OnInit {
       })
       Promise.all(promises)
         .then((results) => {
-          if (this.title == 'Add' && this.updateId == '') {
+          if (!this.isEdit || (this.title == 'Add' && this.updateId == '')) {
             let data: any;
             data = this.createAddForm.value;
             data.images = results;
@@ -266,6 +291,9 @@ export class CreateAddPage implements OnInit {
     this.images = [];
     this.api.getAddDetails().subscribe(res => {
       if (res) {
+
+        console.log('res',res);
+        
         this.updateId = res.id;
         this.createAddForm.patchValue({
           countryId: res.countryId,
@@ -293,7 +321,7 @@ export class CreateAddPage implements OnInit {
     })
   }
 
-  compareCountry(e1, e2): boolean {
+  compareCountry(e1, e2): boolean { 
     return e1 && e2 ? e1.id == e2.id : e1 == e2;
   }
   compareCity(c1, c2): boolean {

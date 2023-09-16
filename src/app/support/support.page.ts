@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./support.page.scss'],
 })
 export class SupportPage implements OnInit {
-
+  @Input() isDesktop: boolean;
   constructor(private callNumber: CallNumber,
     public translate: TranslateService) { }
 

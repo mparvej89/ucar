@@ -1,6 +1,6 @@
 import { AfterContentChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController, PopoverController } from '@ionic/angular';
 import { SearchComponent } from '../search/search.component';
 import { CountryCityComponent } from '../country-city/country-city.component';
 import { ApiService } from '../services/api.service';
@@ -13,6 +13,13 @@ import { SwiperComponent } from 'swiper/angular';
 import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, SwiperOptions, Zoom } from 'swiper';
 import { CreateAddPage } from '../create-add/create-add.page';
 import { ProductDetailsPage } from '../product-details/product-details.page';
+import { AuthService } from '../services/auth.service';
+import { AboutUsPage } from '../about-us/about-us.page';
+import { ProfilePage } from '../profile/profile.page';
+import { SupportPage } from '../support/support.page';
+import { TermsConditionPage } from '../terms-condition/terms-condition.page';
+import { MyAddsPage } from '../my-adds/my-adds.page';
+import { LoginPage } from '../login/login.page';
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 @Component({
   selector: 'app-tab1',
@@ -58,13 +65,21 @@ export class Tab1Page implements OnInit {
   isOpenPopover: boolean = false;
   cities: any[] = [];
   cityId: any;
+  appPages = [
+    { title: 'side-bar-menu.about', url: 'about-us', icon: 'information-circle-outline' },
+    { title: 'side-bar-menu.support', url: 'support', icon: 'headset-outline' },
+    { title: 'side-bar-menu.Terms-Condition', url: 'terms-condition', icon: 'bulb-outline' },
+    { title: 'side-bar-menu.Login-Signup', url: 'login', icon: 'log-in-outline' }
+  ];
   constructor(public router: Router,
     public modalCtrl: ModalController,
     public api: ApiService,
     public util: UtilService,
     private db: AngularFirestore,
     public translate: TranslateService,
-    private screensizeService: ScreensizeService) {
+    private screensizeService: ScreensizeService,
+    public auth: AuthService,
+    public popoverController: PopoverController) {
     this.screensizeService.isDesktopView().subscribe((isDesktop) => {
       this.isDesktop = isDesktop;
       if (this.isDesktop) {
@@ -81,6 +96,15 @@ export class Tab1Page implements OnInit {
     this.api.getUserDetails().subscribe(res => {
       if (res) {
         this.userDetails = res;
+        this.appPages = [
+          { title: 'side-bar-menu.profile', url: 'profile', icon: 'person-circle-outline' },
+          { title: 'side-bar-menu.about', url: 'about-us', icon: 'information-circle-outline' },
+          { title: 'side-bar-menu.My-Ads', url: 'my-adds', icon: 'image-outline' },
+          { title: 'side-bar-menu.support', url: 'support', icon: 'headset-outline' },
+          { title: 'side-bar-menu.Terms-Condition', url: 'terms-condition', icon: 'bulb-outline' },
+          { title: 'side-bar-menu.Logout', url: 'logout', icon: 'log-in-outline' }
+        ];
+
       }
       this.getVehicleType();
 
@@ -139,7 +163,8 @@ export class Tab1Page implements OnInit {
       if (this.isDesktop) {
         const modal = await this.modalCtrl.create({
           component: CreateAddPage,
-          cssClass: 'custom-modal'
+          cssClass: 'custom-modal',
+          componentProps: { isEdit: false }
         });
         modal.present();
 
@@ -329,9 +354,70 @@ export class Tab1Page implements OnInit {
       res.forEach((element: any) => {
         let tempCity = element.data();
         this.cities.push(tempCity);
-        this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName))
+        if (this.translate.currentLang == 'ar') {
+          this.cities.sort((a, b) => a.cityName.localeCompare(b.cityName));
+        }
+        else {
+          this.cities.sort((a, b) => a.encityName.localeCompare(b.encityName))
+        }
+
       });
     })
+  }
+
+  route(url) {
+    let comRef: any;
+    this.popoverController.dismiss();
+    switch (url) {
+      case "logout":
+        this.logOut();
+        break;
+      case "about-us":
+        comRef = AboutUsPage;
+        this.presentPage(comRef)
+        break;
+      case "profile":
+        comRef = ProfilePage;
+        this.presentPage(comRef)
+        break;
+      case "support":
+        comRef = SupportPage;
+        this.presentPage(comRef)
+        break;
+      case "terms-condition":
+        comRef = TermsConditionPage;
+        this.presentPage(comRef)
+        break;
+      case "my-adds":
+        comRef = MyAddsPage;
+        this.presentPage(comRef)
+        break;
+      case "login":
+        comRef = LoginPage;
+        this.presentPage(comRef)
+        break;
+
+
+    }
+  }
+
+  logOut() {
+    this.auth.logout().then(res => {
+      localStorage.clear();
+      this.api.setUserDetails(null);
+      window.location.reload();
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  async presentPage(comp) {
+    const modal = await this.modalCtrl.create({
+      component: comp,
+      cssClass: 'custom-modal',
+      componentProps: { isDesktop: true }
+    });
+    modal.present();
   }
 
 }
