@@ -28,7 +28,7 @@
         </ion-thumbnail>
         <ion-label>
           <p style="font-size: 16px; font-weight: 600;">{{ad?.name}}</p>
-          <p style="font-size: 12px; font-weight: 400; color: #c70c0c;">{{ad.countryId.currency}}: {{ad?.price | number:'1.2-2'}}</p>
+          <p style="font-size: 12px; font-weight: 400; color: #c70c0c;">{{ad.countryId.currency}}: {{ad?.price | number:'1.0-0'}}</p>
           <p>KM: {{ad?.kilometer}}</p>
         </ion-label>
         <ion-icon name="ellipsis-vertical-outline" slot="end" (click)="action(ad)"></ion-icon>

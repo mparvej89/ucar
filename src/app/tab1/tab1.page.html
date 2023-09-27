@@ -161,6 +161,11 @@
     <ion-modal #modal trigger="open-filters" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.25, 0.5, 0.75]">
       <ng-template>
         <ion-content class="ion-padding">
+
+          <div style="text-align:right;">
+            <ion-button fill="outline" size="small" translate (click)="resetFilter()">common-buttons.reset</ion-button>
+          </div>
+
           <ion-list>
             <ion-item detail (click)="minmax()">
               <ion-label>
@@ -229,7 +234,7 @@
       <ion-img class="product-img" [src]="add.images[0]"></ion-img>
       <ion-card-content class="card-content">
         <ion-card-subtitle>{{translate.currentLang=='ar'? add.countryId.currency: add.countryId.encurrency}} {{add.price
-          | number:'1.2-2'}}</ion-card-subtitle>
+          | number:'1.0-0'}}</ion-card-subtitle>
         <p class="lbl-sub-name">{{add?.name}}</p>
         <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar'?
           add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>
@@ -585,7 +590,7 @@
           <ion-img class="product-img" [src]="add.images[0]"></ion-img>
           <ion-card-content class="card-content">
             <ion-card-subtitle>{{translate.currentLang=='ar' ? add.countryId.currency:add.countryId.encurrency}}
-              {{add.price | number:'1.2-2'}}</ion-card-subtitle>
+              {{add.price | number:'1.0-0'}}</ion-card-subtitle>
             <p class="lbl-sub-name">{{add?.name}}</p>
             <p class="lbl-sub">{{'common-words.brand' | translate}}: {{translate.currentLang=='ar' ?
               add?.brandId?.brandName:add?.brandId?.enbrandName}}</p>

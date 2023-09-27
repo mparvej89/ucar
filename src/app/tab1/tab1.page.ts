@@ -420,4 +420,12 @@ export class Tab1Page implements OnInit {
     modal.present();
   }
 
+  resetFilter() {
+    this.adds = [];
+    this.getMoreData(null);
+    this.modalCtrl.dismiss();
+    this.cityId = '';
+    this.filterCity = false;
+  }
+
 }

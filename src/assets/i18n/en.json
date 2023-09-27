@@ -54,7 +54,8 @@
         "signup": "Sign Up",
         "see-listing": "See Listing",
         "login-email": "Continue with Email",
-        "save": "POST"
+        "save": "POST",
+        "reset":"Reset"
     },
     "placeholder-text": {
         "email": "Enter Your Email",
@@ -85,7 +86,7 @@
         "price-valid": "Please enter the numbers in english",
         "phone": "Phone is required",
         "phone-valid": "Please enter the numbers in english",
-        "phone-length": "Mobile number must be 10 digit"
+        "phone-length": "Mobile number must be 5 to 14 digit"
     },
     "side-bar-menu": {
         "profile": "Profile",

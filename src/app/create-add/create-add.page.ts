@@ -59,7 +59,7 @@ export class CreateAddPage implements OnInit {
       year: new FormControl(this.year, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{4}$")]),
       kilometer: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]*$"), Validators.minLength(4), Validators.min(1000)]),
       price: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]*$")]),
-      phone: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]),
+      phone: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(5), Validators.maxLength(14)]),
       about: new FormControl(''),
       type: new FormControl('', [Validators.required]),
     });

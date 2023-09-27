@@ -18,7 +18,7 @@
       </ng-template>
     </swiper>
     <ion-card-content class="card-content">
-      <ion-card-subtitle>{{translate.currentLang=='ar'?addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
+      <ion-card-subtitle>{{translate.currentLang=='ar'?addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.0-0'}}</ion-card-subtitle>
       <p class="lbl-sub">{{addDetails?.name}}</p>
     </ion-card-content>
   </ion-card>
@@ -134,7 +134,7 @@
       </ng-template>
     </swiper>
     <ion-card-content class="card-content">
-      <ion-card-subtitle>{{translate.currentLang=='ar'? addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.2-2'}}</ion-card-subtitle>
+      <ion-card-subtitle>{{translate.currentLang=='ar'? addDetails.countryId.currency:addDetails.countryId.encurrency}} {{addDetails?.price | number:'1.0-0'}}</ion-card-subtitle>
       <p class="lbl-sub">{{addDetails?.name}}</p>
     </ion-card-content>
   </ion-card>
@@ -160,7 +160,7 @@
           {{'common-words.kilometers' | translate}}
         </ion-label>
         <p class="right">
-          {{addDetails?.kilometer | number:'1.2-2'}}
+          {{addDetails?.kilometer | number:'1.0-0'}}
         </p>
       </ion-item>
       <!-- <ion-item class="items">
